@@ -4,10 +4,10 @@ import supermarket.inventory.Product;
 import java.util.List;
 
 
-// This class performs a binary search by the Product ID in the supermarket system
-// The binary search will take the ID from the Product class, and start performing the search
+// This class performs a binary search by the Product ID in the supermarket system.
+// The binary search will take the ID from the Product class, and start performing the search.
 // The search uses variables such as 'left', 'right', and 'mid', to keep track of the search boundaries and the
-// midpoint inside the sorted array
+// midpoint inside the sorted array.
 // Searching Algorithm coded by Alesha Sangar
 
 
