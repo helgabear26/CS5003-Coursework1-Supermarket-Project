@@ -22,10 +22,6 @@ public class SearchAlgorithm {
         int right = products.size() - 1 ; // Last index of list
 
 
-        // Print starting message
-        System.out.println("Searching for product ID: " + targetID);
-
-
         // Loop runs while the search range is valid; stops when the product cannot be found
         while (left <= right) {
 
@@ -36,17 +32,12 @@ public class SearchAlgorithm {
             Product midpoint = products.get(mid);
 
 
-            // Print what ID you're checking
-            System.out.println("Checking index " + mid + "with ID: " + midpoint.getId());
-
-
             // Compares the midpoint product's ID with the targetID
             int comparison = midpoint.getId().compareTo(targetID);
 
 
             // If they match...
             if (comparison == 0) {
-                System.out.println("Product found at index: " + mid);
                 return mid; // Found -> index returned
             }
 
@@ -66,8 +57,7 @@ public class SearchAlgorithm {
 
         }
 
-        // Print not found message
-        System.out.println("Product not found");
+
         return -1; // Not found
 
     }
