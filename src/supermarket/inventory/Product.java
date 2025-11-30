@@ -3,6 +3,8 @@ package supermarket.inventory;
 import supermarket.management.CustomLinkedList;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 // This class represents a single product in the supermarket system
 // Each product has:
@@ -27,7 +29,7 @@ public class Product {
     private String id;
 
     // A linked list that stores the last four activities objects performed for this product.
-    private CustomLinkedList activities = new CustomLinkedList();
+    private CustomLinkedList<Activity> activities;
 
     // Constructor: Creates a new Product object
 
@@ -44,21 +46,32 @@ public class Product {
 
         // Sets the entry date to the right now
         this.TimeStamp = LocalDateTime.now(); // Captures the exact date and time the object was created
+
+        this.activities = new CustomLinkedList<>();
     }
 
-     // Method: addActivity(Activity activity) adds a new activity to the list and ensures only four remain
-    public void addActivity(Activity activity) {
+    // Getters return the linked list of activities
 
-        // Add the new activity to the end of the linked list
-        activities.add(activity);
+    public String getId(){
 
-        // If more than four activities are stored
-        if (activities.size() > 4) {
-
-            // Removes the first oldest activity
-            activities.removeFirstElement();
-        }
+        return id;
     }
+
+    public String name(){
+
+        return name;
+    }
+
+    public LocalDateTime TimeStamp(){
+
+        return TimeStamp;
+    }
+
+    public int getQuantity(){
+
+        return quantity;
+    }
+
 
     // Method: updateQuantity(int amount, String activityType) updates the quantity based on AddToStock and RemoveFromStock
 
@@ -82,34 +95,33 @@ public class Product {
         }
     }
 
-    // Getters return the linked list of activities
+    // Method: addActivity(Activity activity) adds a new activity to the list and ensures only four remain
+    public void addActivity(Activity activity) {
 
-    public String getId(){
-        return id;
+        // Add the new activity to the end of the linked list
+        activities.add(activity);
+
+        // If more than four activities are stored
+        if (activities.size() > 4) {
+
+            // Removes the first oldest activity
+            activities.removeFirstElement();
+        }
     }
 
-    public String name(){
-        return name;
-    }
-
-    public LocalDateTime TimeStamp(){
-        return TimeStamp;
-    }
-
-    public int getQuantity(){
-        return quantity;
-    }
-
-
-    public CustomLinkedList getActivities(){
-
-        return activities;
+    // This method converts the internal CustomLinkedList<Activity> into an array list to help the soring and displaying and to prevent modification.
+    public List<Activity> getActivities(){
+        // Creates a new empty ArrayList that will hold the activities
+        List<Activity> list = new ArrayList<>();
+        // Lops through the elements and retrieves the position of an activity at position i using the CustomLinkedList
+        for (int i = 0; i< activities.size(); i++ ){
+            list.add(activities.get(i));
+        }
+        return list; // Returns the ArrayList containing all the activities without affecting the internal linked list
     }
 
 
     // Method: toString() returns a text version of the product to print product details
-
-
     @Override
     public String toString(){
         return "Product{" +

@@ -5,7 +5,7 @@ package supermarket.management;
 // 1. Data about the object you want to store
 // 2. An address which is a link between the nodes in the chain
 
-public class CustomLinkedList {
+public class CustomLinkedList<T> {
 
     // Below is the inner class Node
     // A node represents an element inside a linked list. It contains:
@@ -17,7 +17,7 @@ public class CustomLinkedList {
         // This variable stores the data that needs to be kept in the list.
         // It is of type object so it can store any type(e.g Activity, Product, String)
 
-        Object data;
+        T data;
 
         // This variable stores a reference to the next node in the list
         // If next = null, it means this is the last node
@@ -27,7 +27,7 @@ public class CustomLinkedList {
         // Constructor - this method creates a new Node object
         // It takes the argument data which is the thing we want to store
 
-        Node(Object data) {
+        Node(T data) {
 
             // Store the passed data inside the node
 
@@ -57,7 +57,7 @@ public class CustomLinkedList {
 
     // Method: add(ObjectData) adds a new element to the end of the linked list
 
-    public void add(Object data) {
+    public void add(T data) {
 
         // Creates anew node containing the new data
 
@@ -90,7 +90,7 @@ public class CustomLinkedList {
 
     public void removeFirstElement() {
 
-        // If head is null, the lsit is empty, so nothing to remove
+        // If head is null, the list is empty, so nothing to remove
 
         if (head == null)
             return;
@@ -113,12 +113,12 @@ public class CustomLinkedList {
 
     // Method get(int index) returns the data object stored at a specific position
 
-    public Object get(int index) {
+    public T get(int index) {
 
         // If index is invalid (as in less than 0 or greater than the last index), it throws an error to prevent the accessing of memory illegally
 
         if (index < 0 || index >= size) // uses a logical OR operator
-            throw new IndexOutOfBoundsException();
+            throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
 
         // Start at the head of the list
 
@@ -135,9 +135,10 @@ public class CustomLinkedList {
         return current.data;
     }
 
-    // Method: getSize() returns the amount of elements there are in the lsit
+    // Method: getSize() returns the amount of elements there are in the list
 
     public int size(){
+
         return size;
     }
 
