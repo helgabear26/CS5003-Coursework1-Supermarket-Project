@@ -1,7 +1,7 @@
 package supermarket.algorithms;
 
 import supermarket.inventory.Product;
-import java.util.List;
+import supermarket.management.CustomLinkedList;
 
 
 // This class performs a binary search by the Product ID in the supermarket system.
@@ -13,9 +13,9 @@ import java.util.List;
 
 public class SearchAlgorithm {
 
-    // Binary search defined by list
+    // Binary search defined by the CustomLinkedListClass
     // List consists of ProductIDs from the product class
-    public static int binarySearchByID(List<Product> products, String targetID) {
+    public static int binarySearchByID(CustomLinkedList<Product> products, String targetID) {
 
 
         int left = 0; // First index of list
