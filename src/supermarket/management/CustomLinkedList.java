@@ -142,5 +142,10 @@ public class CustomLinkedList<T> {
         return size;
     }
 
+    public void set(int size, T data) {
+
+    }
+
+
 
 }

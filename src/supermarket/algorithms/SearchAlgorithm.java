@@ -5,13 +5,13 @@ import java.util.ArrayList;
 
 // This class performs a binary search by the Product ID in the supermarket system
 // The binary search will take the ID from the Product class, and start performing the search
-// The search uses variables such as 'left', 'right', and 'mid', to keep track of the search boundaries and the
+// uses variables such as 'left', 'right', and 'mid', to keep track of the search boundaries and the
 // midpoint inside the sorted array
 
 public class SearchAlgorithm {
 
     // Binary search defined by list
-    // List consists of ProductIDs from the product class
+    // consists of ProductIDs from the product class
     public static int binarySearchByID(ArrayList<Product> products, String targetID) {
 
         int left = 0; // First index of list
