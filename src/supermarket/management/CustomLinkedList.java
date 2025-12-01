@@ -135,6 +135,16 @@ public class CustomLinkedList<T> {
         return current.data;
     }
 
+    public void set(int index, T data) {
+
+        if (index < 0 || index >= size)
+            throw new IndexOutOfBoundsException();
+        Node current = head;
+        for (int i = 0; i < index; i++) current = current.next;
+        current.data = data;
+
+    }
+
     // Method: getSize() returns the amount of elements there are in the list
 
     public int size(){
@@ -142,7 +152,6 @@ public class CustomLinkedList<T> {
         return size;
     }
 
-    public void set(int size, T data) {
 
     }
 
