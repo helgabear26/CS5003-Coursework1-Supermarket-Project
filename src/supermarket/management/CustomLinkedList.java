@@ -135,12 +135,20 @@ public class CustomLinkedList<T> {
         return current.data;
     }
 
+    // Updates the elemets stored at a specific index in the linked list
     public void set(int index, T data) {
-
-        if (index < 0 || index >= size)
-            throw new IndexOutOfBoundsException();
+        // Validates the index preventing a node that doesn't exist from updating
+        if (index < 0 || index >= size) {
+            // If invalid throw an exception with details about the bad index and current list size
+            throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
+        }
+        // Stars identifying the first node in the list then goes on node by node
         Node current = head;
-        for (int i = 0; i < index; i++) current = current.next;
+        // Moves foreward until the desired index is reached by moving from the current to the next node
+        for (int i = 0; i < index; i++) {
+            current = current.next;
+        }
+        // Reaches the node at the correct index and replaces the data stored with a new value
         current.data = data;
 
     }
@@ -151,10 +159,6 @@ public class CustomLinkedList<T> {
 
         return size;
     }
-
-
-    }
-
 
 
 }
