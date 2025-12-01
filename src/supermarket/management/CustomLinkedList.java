@@ -145,6 +145,8 @@ public class CustomLinkedList<T> {
 
     }
 
+
+
     // Method: getSize() returns the amount of elements there are in the list
 
     public int size(){
