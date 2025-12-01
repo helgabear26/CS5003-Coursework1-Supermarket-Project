@@ -4,63 +4,33 @@ import supermarket.inventory.Product;
 import supermarket.management.CustomLinkedList;
 
 
-// This class performs a binary search by the Product ID in the supermarket system.
-// The binary search will take the ID from the Product class, and start performing the search.
-// The search uses variables such as 'left', 'right', and 'mid', to keep track of the search boundaries and the
-// midpoint inside the sorted array.
+// This class performs a linear search by the Product ID in the supermarket system.
+// The linear search will take the ID from the Product class, and start performing the search.
+// The search will loop through the entire linked list (from CustomLinkedList class) until target ID is found.
+// Linear Search will be used as it is the most efficent searching algorithm on linked lists.
 // Searching Algorithm coded by Alesha Sangar
 
 
 public class SearchAlgorithm {
 
-    // Binary search defined by the CustomLinkedListClass
-    // List consists of ProductIDs from the product class
-    public static int binarySearchByID(CustomLinkedList<Product> products, String targetID) {
+    public static int linearSearchByID(CustomLinkedList<Product> products, String targetID) {
 
+        // Loop through every element in the linked list
+        for (int i = 0; i < products.size(); i++) {
 
-        int left = 0; // First index of list
-        int right = products.size() - 1 ; // Last index of list
+            // Get the product at the current position
+            Product current = products.get(i);
 
+            // Check if the ID matches the one we are searching for
+            if (current.getId().equals(targetID)) {
 
-        // Loop runs while the search range is valid; stops when the product cannot be found
-        while (left <= right) {
-
-            int mid = (left + right) / 2; // Midpoint (middle index) defined
-
-
-            // Retrieves product object located at midpoint
-            Product midpoint = products.get(mid);
-
-
-            // Compares the midpoint product's ID with the targetID
-            int comparison = midpoint.getId().compareTo(targetID);
-
-
-            // If they match...
-            if (comparison == 0) {
-                return mid; // Found -> index returned
+                // Return the index where the product was found
+                return i;
             }
-
-            // If not...
-            // Keep searching through list
-            else if (comparison < 0) {
-
-                // If midpoint less than target ID, target must be in the right half of list
-                left = mid + 1; // Discard left half
-            }
-            else {
-
-                // If midpoint greater than target ID, target must be in the left half of list
-                right = mid - 1; // Discard right half
-            }
-
-
         }
 
-
-        return -1; // Not found
-
+        // Product was not found in the list
+        return -1;
     }
-
 
 }
