@@ -15,7 +15,7 @@ public class CustomLinkedList<T> {
     private class Node {
 
         // This variable stores the data that needs to be kept in the list.
-        // It is of type object so it can store any type(e.g Activity, Product, String)
+        // It is of type object so it can store any type(e.g. Activity, Product, String)
 
         T data;
 
