@@ -135,7 +135,7 @@ public class CustomLinkedList<T> {
         return current.data;
     }
 
-    // Updates the elemets stored at a specific index in the linked list
+    // Updates the elements stored at a specific index in the linked list
     public void set(int index, T data) {
         // Validates the index preventing a node that doesn't exist from updating
         if (index < 0 || index >= size) {
@@ -144,7 +144,7 @@ public class CustomLinkedList<T> {
         }
         // Stars identifying the first node in the list then goes on node by node
         Node current = head;
-        // Moves foreward until the desired index is reached by moving from the current to the next node
+        // Moves forward until the desired index is reached by moving from the current to the next node
         for (int i = 0; i < index; i++) {
             current = current.next;
         }
