@@ -3,8 +3,8 @@ package supermarket.inventory;
 import supermarket.management.CustomLinkedList;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+
+
 
 // This class represents a single product in the supermarket system
 // Each product has:
@@ -109,11 +109,11 @@ public class Product {
         }
     }
 
-    // This method converts the internal CustomLinkedList<Activity> into an array list to help the soring and displaying and to prevent modification.
-    public List<Activity> getActivities(){
+    // This method converts the internal CustomLinkedList<Activity> into a new custom linked list to help the soring and displaying and to prevent modification.
+    public CustomLinkedList<Activity> getActivities(){
         // Creates a new empty ArrayList that will hold the activities
-        List<Activity> list = new ArrayList<>();
-        // Lops through the elements and retrieves the position of an activity at position i using the CustomLinkedList
+        CustomLinkedList<Activity> list = new CustomLinkedList<>();
+        // Lops through the elements and retrieves the position of an activity at position "i" using the CustomLinkedList
         for (int i = 0; i< activities.size(); i++ ){
             list.add(activities.get(i));
         }
