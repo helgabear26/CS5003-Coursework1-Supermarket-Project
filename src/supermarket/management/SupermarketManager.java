@@ -4,7 +4,6 @@ import supermarket.algorithms.SearchAlgorithm;
 import supermarket.algorithms.SortAlgorithm;
 import supermarket.inventory.Product;
 import  supermarket.inventory.Activity;
-import supermarket.management.CustomLinkedList;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -34,7 +33,7 @@ public class SupermarketManager
 
     }
     //  this the method to add product to the supermarket
-    public  void addProduct(Product value )
+    public  void addProduct(Product value)
     {
         // check if the product with a particular id already exist using the searchAlgorithm
         if ( SearchAlgorithm.binarySearchByID(products,value.getId())>= 0)
