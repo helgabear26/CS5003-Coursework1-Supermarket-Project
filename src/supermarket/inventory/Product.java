@@ -126,10 +126,12 @@ public class Product {
     // Method: toString() returns a text version of the product to print product details
     @Override
     public String toString(){
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd 'at' HH:mm:ss");
+
+        // Displays the date and time in the appropriate format
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd 'at' hh:mm:ss a");
 
         return "Product {" +
-                "ID = '" + id + "/'" +
+                "ID = '" + id + '\'' +
                 ", Name = " + name +
                 ", TimeStamp = " + TimeStamp.format(formatter) +
                 ", Quantity = " + quantity +

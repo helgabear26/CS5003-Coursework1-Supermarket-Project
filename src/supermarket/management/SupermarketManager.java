@@ -8,7 +8,7 @@ import  supermarket.inventory.Activity;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-// this is the supermarket class which manges the system
+// this is the supermarket class which manages the system
 // it in control of products storage, searching for products,
 // add/remove products and recording product activities.
 public class SupermarketManager
@@ -49,22 +49,31 @@ public class SupermarketManager
 
     }
     // remove a product based on its id
-    public void  deleteproducts(String id)
+    public Product  deleteproducts(String id)
     {
-        // serach for the product index using the searchAlgorithm
+        // search for the product index using the searchAlgorithm
         int index = SearchAlgorithm.binarySearchByID(products, id);
         // if the index is less than zero which means the id is not the list then do nothing
-        if (index<0)
-            return;
+        if (index < 0) {
+            return null;   // product not found
+        }
+
+        // get product BEFORE removing it
+        Product removedProduct = products.get(index);
+
         // remove the product from the list
         products.remove(index);
 
         // print out message inform the actions is done
         System.out.println("Product has been removed !");
 
+        // return the removed product so UI can show details
+        return removedProduct;
+
     }
 
-     // a method to search for a product and returns its index
+
+    // a method to search for a product and returns its index
     public int search(ArrayList<Product> products, String targetID)
     {
         // using the search algorithms to locate the product id at index
@@ -72,7 +81,7 @@ public class SupermarketManager
     }
 
     // the method is to preform an activity (add/ remove stock) on a specific product
-    public void addactivitytoproduct(String id,int quantity,String name,String action)
+    public void addactivitytoproduct(String id,int quantity,String action)
     {
         // find the product index
         int index = SearchAlgorithm.binarySearchByID(products,id);
@@ -122,7 +131,7 @@ public class SupermarketManager
 
 
     }
-    // this methods retrieves last four activities for product,
+    // This method retrieves last four activities for product,
     public CustomLinkedList<Activity> lastFourSortedBYQuantity(String id)
     {
         //  find product
@@ -173,7 +182,7 @@ public class SupermarketManager
         // get the product
         Product value = products.get(index);
         // print out a title of the product id
-        System.out.println("activites for product "+ id + ":");
+        System.out.println("activities for product "+ id + ":");
 
         // loop through
         for(int i = 0; i < value.getActivities().size();i++)

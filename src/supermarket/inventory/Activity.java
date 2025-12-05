@@ -72,7 +72,7 @@ public class Activity {
         this.id = id;
     }
 
-    // method to add quantity to stock and record a add to stock activity
+    // method to add quantity to stock and record an add to stock activity
     public void AddToStock(int value) {
         // check out for positive values
         if (value > 0) {
@@ -86,7 +86,7 @@ public class Activity {
         }
     }
 
-    //method to remove quantity to stock and record a  remove from stock activity
+    // method to remove quantity to stock and record a  remove from stock activity
     public void RemoveFromStock(int value) {
 
         // check out for positive removal and there is non-negative stock
@@ -109,14 +109,16 @@ public class Activity {
     //  override toString method to format activity details when printed
     @Override
     public String toString() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd 'at' HH:mm:ss");
+
+        // Displays the date and time in the appropriate format
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd 'at' hh:mm:ss a");
 
 
         return "Activity {" +
-                "ID = " + id + '\'' + // display product id
-                ", Name = " + name + // display name
+                "ID = '" + id + '\'' + // display product id
+                ", Action Name = " + name + // display name
                 ", Quantity = " + quantity + // display quantity
-                ", Date = " + TimeStamp.format(formatter) + // display timeStamp
+                ", Date = " + TimeStamp.format(formatter) + // display date and timeStamp
                 '}';
     }
 
