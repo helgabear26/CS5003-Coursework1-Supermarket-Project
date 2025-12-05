@@ -7,6 +7,7 @@ import supermarket.management.SupermarketManager;
 
 import java.util.Scanner;
 
+/*
 public class ConsoleUI {
 
     private final SupermarketManager manager = new SupermarketManager();
@@ -134,3 +135,5 @@ public class ConsoleUI {
 
 
 }
+
+ */
