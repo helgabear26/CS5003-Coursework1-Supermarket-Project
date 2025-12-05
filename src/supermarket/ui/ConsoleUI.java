@@ -50,7 +50,7 @@ public class ConsoleUI {
                     int quantity = inventory.nextInt();
                     inventory.nextLine();
 
-                    System.out.println("Enter a product name: ");
+                    System.out.println(" Enter product name: ");
                     String name = inventory.nextLine();
 
                     System.out.println("Enter an action (add / delete)");
@@ -61,21 +61,7 @@ public class ConsoleUI {
                     manager.addactivitytoproduct(id, quantity, name, action);
                 }
 
-                case 5 -> {
-                    System.out.println("Enter product id");
-                    String id = inventory.nextLine();
-
-                    CustomLinkedList<Activity> result = manager.lastFourSortedBYQuantity(id);
-
-                    if (result == null) {
-                        System.out.println("Product not found. ");
-                    } else {
-                        System.out.println("Last four activities sorted by quantity");
-                        for (int i = 0; i < result.size(); i++) {
-                            System.out.println(result.get(i));
-                        }
-                    }
-                }
+                case 5 -> lastFourSortedBYQuantity();
                 case 6 -> {
                     System.out.println("Exiting the program. ");
                     inventory.close();

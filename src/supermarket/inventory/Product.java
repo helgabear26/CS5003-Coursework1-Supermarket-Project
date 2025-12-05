@@ -4,6 +4,8 @@ import supermarket.management.CustomLinkedList;
 
 import java.time.LocalDateTime;
 
+import java.time.format.DateTimeFormatter;
+
 
 
 // This class represents a single product in the supermarket system
@@ -124,11 +126,13 @@ public class Product {
     // Method: toString() returns a text version of the product to print product details
     @Override
     public String toString(){
-        return "Product{" +
-                "ID= '" + id + "/'" +
-                ", name= " + name +
-                ", TimeStamp= " + TimeStamp +
-                ", quantity= " + quantity +
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd 'at' HH:mm:ss");
+
+        return "Product {" +
+                "ID = '" + id + "/'" +
+                ", Name = " + name +
+                ", TimeStamp = " + TimeStamp.format(formatter) +
+                ", Quantity = " + quantity +
                 '}';
     }
 

@@ -1,8 +1,9 @@
 package supermarket.inventory;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
-//the is the activity class represents an action performed on a product
+// This is the activity class represents an action performed on a product
 // it also records details quantity changed,timeStamp, product id and type of activity
 
 
@@ -105,15 +106,17 @@ public class Activity {
 
     }
 
-    //  override tostring method to format activity details when printed
+    //  override toString method to format activity details when printed
     @Override
     public String toString() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd 'at' HH:mm:ss");
 
-        return "Activity{" +
-                "ID = " + id + '\'' +// display product id
-                ", name= " + name + // display name
-                ",Quantity = " + quantity +// display qunatity
-                ", data = " + TimeStamp +// display timeStamp
+
+        return "Activity {" +
+                "ID = " + id + '\'' + // display product id
+                ", Name = " + name + // display name
+                ", Quantity = " + quantity + // display quantity
+                ", Date = " + TimeStamp.format(formatter) + // display timeStamp
                 '}';
     }
 

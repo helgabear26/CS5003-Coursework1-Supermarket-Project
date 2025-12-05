@@ -97,21 +97,21 @@ public class SupermarketManager
 
             // create new activity  entry
             Activity activity = new Activity(
-                    quantity, "ADDTOSTOCK",
+                    quantity, "ADDED_TO_STOCK",
                     LocalDateTime.now(), value.getId()
             );
-            // then save the activtiy into the product history
+            // then save the activity into the product history
             value.addActivity(activity);
 
             //if the action is to remove from stock
-        } else if (action.equalsIgnoreCase("remove"))
+        } else if (action.equalsIgnoreCase("remove") || action.equalsIgnoreCase("delete"))
         {
             // update the quantity of the products
             value.update_Quantity(quantity, "RemoveFromStock");
 
             //  create a new activity entry
             Activity activity = new Activity(
-                    quantity,"RemoveFromStock",
+                    quantity,"REMOVED_FROM_STOCK",
                     LocalDateTime.now(), value.getId()
             );
             //save the activity
