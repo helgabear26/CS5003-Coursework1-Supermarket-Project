@@ -16,6 +16,10 @@ public class GUI_Main_Page extends JPanel {
 
         setLayout(new GridLayout(6, 1, 10, 10));
 
+        JLabel welcomePage = new JLabel("Hello! ");
+
+        add(welcomePage);
+
 
 
     }
