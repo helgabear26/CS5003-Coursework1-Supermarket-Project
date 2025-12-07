@@ -14,11 +14,41 @@ public class GUI_Main_Page extends JPanel {
         this.frame = frame;
         this.manager = manager;
 
-        setLayout(new GridLayout(6, 1, 10, 10));
+        setLayout(new BorderLayout());
+        setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-        JLabel welcomePage = new JLabel("Hello! ");
 
-        add(welcomePage);
+        // ===== Title (north) =====
+        JLabel titleLabel = new JLabel("Supermarket Manager System");
+        titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 26));
+        add(titleLabel, BorderLayout.NORTH);
+
+        // ===== Buttons (center) =====
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new GridLayout(3, 2, 20, 20));
+        buttonPanel.setBorder(BorderFactory.createEmptyBorder(20, 150, 20, 150));
+
+        JButton addProductBtn = new JButton("Add Product");
+        JButton viewProductsBtn = new JButton("View Products");
+        JButton deleteProductBtn = new JButton("Delete Product");
+        JButton updateStockBtn = new JButton("Update Stock");
+        JButton recentActivityBtn = new JButton("Recent Activities");
+        JButton exitBtn = new JButton("Exit");
+
+        buttonPanel.add(addProductBtn);
+        buttonPanel.add(viewProductsBtn);
+        buttonPanel.add(deleteProductBtn);
+        buttonPanel.add(updateStockBtn);
+        buttonPanel.add(recentActivityBtn);
+        buttonPanel.add(exitBtn);
+
+        add(buttonPanel, BorderLayout.CENTER);
+
+
+
+
+
 
 
 
