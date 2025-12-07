@@ -41,9 +41,14 @@ public class GUI_Main_Page extends JPanel {
         buttonPanel.add(deleteProductBtn);
         buttonPanel.add(updateStockBtn);
         buttonPanel.add(recentActivityBtn);
+
         buttonPanel.add(exitBtn);
+        exitBtn.addActionListener(e -> System.exit(0));
 
         add(buttonPanel, BorderLayout.CENTER);
+
+
+
 
 
 
