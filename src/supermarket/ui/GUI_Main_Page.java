@@ -25,7 +25,7 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
         setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
 
-        // ===== Title (north) =====
+        // ===== Title (North panel) =====
         JLabel titleLabel = new JLabel("Supermarket Manager System");
         titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
         titleLabel.setFont(new Font("Arial", Font.BOLD, 26));
@@ -33,7 +33,7 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
 
 
 
-        // ===== Buttons (center) =====
+        // ===== Buttons =====
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(3, 2, 20, 20));
         buttonPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
@@ -44,7 +44,7 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
         JButton updateStockBtn = new JButton("Update Stock");
         JButton recentActivityBtn = new JButton("Recent Activities");
         JButton exitBtn = new JButton("Exit");
-        JButton clearBtn = new JButton("clear");
+        JButton clearBtn = new JButton("Clear");
 
         buttonPanel.add(addProductBtn);
         buttonPanel.add(viewProductsBtn);
@@ -61,34 +61,50 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
         exitBtn.addActionListener(e -> System.exit(0));
 
         add(buttonPanel, BorderLayout.CENTER);
-        JPanel panel =  new JPanel();
-        panel.setLayout(new GridLayout(4,2,10,10));
 
-        JLabel name = new JLabel("name");
+        // ===== Form (Text fields) =====
+        JPanel formPanel =  new JPanel();
+        formPanel.setLayout(new GridLayout(4,2,10,10));
+
+        JLabel name = new JLabel("Product Name:");
         nameTextfield = new JTextField();
 
-        JLabel quantity =  new JLabel("quantity");
-        QuantityTextfield =  new JTextField();
-
-        JLabel ID = new JLabel("ID");
+        JLabel ID = new JLabel("Product ID:");
         IDTextField  =  new JTextField();
 
-        JLabel action = new JLabel("Action");
+        JLabel quantity =  new JLabel("Quantity:");
+        QuantityTextfield =  new JTextField();
+
+        JLabel action = new JLabel("Action:");
         ActionTextField = new JTextField();
 
-        panel.add(name);
-        panel.add(nameTextfield);
-        panel.add(quantity);
-        panel.add(QuantityTextfield);
-        panel.add(ID);
-        panel.add(IDTextField);
-        panel.add(action);
-        panel.add(ActionTextField);
+        formPanel.add(name);
+        formPanel.add(nameTextfield);
+        formPanel.add(ID);
+        formPanel.add(IDTextField);
+        formPanel.add(quantity);
+        formPanel.add(QuantityTextfield);
+        formPanel.add(action);
+        formPanel.add(ActionTextField);
 
-        add(panel, BorderLayout.NORTH);
+        add(formPanel, BorderLayout.CENTER);
 
 
+        // ===== Center Panel =====
+        JPanel centerPanel = new JPanel();
+        centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
+        centerPanel.setBorder(BorderFactory.createEmptyBorder(30, 200, 30, 200));
 
+        formPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        buttonPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        centerPanel.add(Box.createVerticalStrut(20)); // space under title
+        centerPanel.add(formPanel);                   // text fields under title
+        centerPanel.add(Box.createVerticalStrut(20)); // space between form and buttons
+        centerPanel.add(buttonPanel);                 // buttons under text fields
+        centerPanel.add(Box.createVerticalGlue());    // push content nicely in center
+
+        add(centerPanel, BorderLayout.CENTER);
 
 
     }
@@ -110,6 +126,7 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
         nameTextfield.setText(" ");
         IDTextField.setText(" ");
         QuantityTextfield.setText(" ");
+        ActionTextField.setText(" ");
     }
     public  void addProduct() {
         try {
