@@ -51,11 +51,14 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
         buttonPanel.add(deleteProductBtn);
         buttonPanel.add(updateStockBtn);
         buttonPanel.add(recentActivityBtn);
+
         buttonPanel.add(exitBtn);
         buttonPanel.add(clearBtn);
 
         clearBtn.addActionListener(this);
         addProductBtn.addActionListener(this);
+
+        exitBtn.addActionListener(e -> System.exit(0));
 
         add(buttonPanel, BorderLayout.CENTER);
         JPanel panel =  new JPanel();
@@ -83,6 +86,9 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
         panel.add(ActionTextField);
 
         add(panel, BorderLayout.NORTH);
+
+
+
 
 
     }
