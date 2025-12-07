@@ -46,6 +46,7 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
         JButton exitBtn = new JButton("Exit");
         JButton clearBtn = new JButton("Clear");
 
+
         buttonPanel.add(addProductBtn);
         buttonPanel.add(viewProductsBtn);
         buttonPanel.add(deleteProductBtn);
@@ -90,7 +91,7 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
         add(formPanel, BorderLayout.CENTER);
 
 
-        // ===== Center Panel =====
+        // ===== Main area (Center Panel) =====
         JPanel centerPanel = new JPanel();
         centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
         centerPanel.setBorder(BorderFactory.createEmptyBorder(30, 200, 30, 200));
@@ -98,9 +99,9 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
         formPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
         buttonPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        centerPanel.add(Box.createVerticalStrut(20)); // space under title
+        centerPanel.add(Box.createVerticalStrut(60)); // space under title
         centerPanel.add(formPanel);                   // text fields under title
-        centerPanel.add(Box.createVerticalStrut(20)); // space between form and buttons
+        centerPanel.add(Box.createVerticalStrut(60)); // space between form and buttons
         centerPanel.add(buttonPanel);                 // buttons under text fields
         centerPanel.add(Box.createVerticalGlue());    // push content nicely in center
 
