@@ -22,7 +22,7 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
         this.manager = manager;
 
         setLayout(new BorderLayout());
-        setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 
 
         // ===== Title (North panel) =====
@@ -35,16 +35,17 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
 
         // ===== Buttons =====
         JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new GridLayout(3, 2, 20, 20));
-        buttonPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
+        buttonPanel.setLayout(new GridLayout(7, 1, 10, 10));
+        buttonPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
         JButton addProductBtn = new JButton("Add Product");
         JButton viewProductsBtn = new JButton("View Products");
         JButton deleteProductBtn = new JButton("Delete Product");
         JButton updateStockBtn = new JButton("Update Stock");
         JButton recentActivityBtn = new JButton("Recent Activities");
-        JButton exitBtn = new JButton("Exit");
         JButton clearBtn = new JButton("Clear");
+        JButton exitBtn = new JButton("Exit");
+
 
 
         buttonPanel.add(addProductBtn);
@@ -52,9 +53,10 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
         buttonPanel.add(deleteProductBtn);
         buttonPanel.add(updateStockBtn);
         buttonPanel.add(recentActivityBtn);
-
-        buttonPanel.add(exitBtn);
         buttonPanel.add(clearBtn);
+        buttonPanel.add(exitBtn);
+
+
 
         clearBtn.addActionListener(this);
         addProductBtn.addActionListener(this);
@@ -62,6 +64,7 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
         exitBtn.addActionListener(e -> System.exit(0));
 
         add(buttonPanel, BorderLayout.CENTER);
+
 
         // ===== Form (Text fields) =====
         JPanel formPanel =  new JPanel();
@@ -92,20 +95,84 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
 
 
         // ===== Main area (Center Panel) =====
+
+        // Panel that actually holds form + buttons
+        JPanel contentPanel = new JPanel(new BorderLayout());
+        contentPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20)); // inner padding
+        contentPanel.add(formPanel, BorderLayout.CENTER); // form in the middle
+        contentPanel.add(buttonPanel, BorderLayout.EAST); // buttons on the right
+
+
+
+// Outer panel uses BoxLayout to center the content panel
         JPanel centerPanel = new JPanel();
-        centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
-        centerPanel.setBorder(BorderFactory.createEmptyBorder(30, 200, 30, 200));
+        centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.X_AXIS));
+        centerPanel.setBorder(BorderFactory.createEmptyBorder(60, 200, 30, 200));
 
-        formPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        buttonPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+// Horizontal glue on both sides keeps the contentPanel centered like a “box”
+        centerPanel.add(Box.createHorizontalGlue());
+        centerPanel.add(contentPanel);
+        centerPanel.add(Box.createHorizontalGlue());
 
-        centerPanel.add(Box.createVerticalStrut(60)); // space under title
-        centerPanel.add(formPanel);                   // text fields under title
-        centerPanel.add(Box.createVerticalStrut(60)); // space between form and buttons
-        centerPanel.add(buttonPanel);                 // buttons under text fields
-        centerPanel.add(Box.createVerticalGlue());    // push content nicely in center
-
+// Add to the main BorderLayout center
         add(centerPanel, BorderLayout.CENTER);
+
+
+        // ===== Separator + Manual Section (South Panel) =====
+        JPanel bottomPanel = new JPanel();
+        bottomPanel.setLayout(new BorderLayout());
+
+// Separator line between buttons and manual
+        JSeparator separator = new JSeparator();
+        separator.setForeground(Color.GRAY);
+        bottomPanel.add(separator, BorderLayout.NORTH);
+
+// Manual Panel (centers all content)
+        JPanel manualPanel = new JPanel(new GridBagLayout());
+// Moves the manual section downwards a little
+        manualPanel.setBorder(BorderFactory.createEmptyBorder(30, 0, 20, 0));
+
+// Panel for stacking subtitle + bullet list vertically
+        JPanel textPanel = new JPanel();
+        textPanel.setLayout(new BoxLayout(textPanel, BoxLayout.Y_AXIS));
+        textPanel.setOpaque(false);
+
+// Subtitle label — moved slightly up
+        JLabel subtitle = new JLabel("System Manual:");
+        subtitle.setFont(new Font("Arial", Font.BOLD, 16));
+        subtitle.setAlignmentX(Component.CENTER_ALIGNMENT);
+        subtitle.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0)); // << shift subtitle up
+
+// Bullet list (centered)
+        JLabel manualText = new JLabel(
+                "<html><div style='text-align: center;'>"
+                        + "• Add Product – Register a new product (Enter Product Name, ID, and Quantity fields)<br>"
+                        + "• View Products – Display all items<br>"
+                        + "• Delete Product – Remove a product (Enter Product ID field)<br>"
+                        + "• Update Stock – Change quantity (Enter Product ID, and Action field)<br>"
+                        + "• Recent Activities – View latest updates (Enter Product ID)<br>"
+                        + "• Exit – Close the system"
+                        + "</div></html>"
+        );
+        manualText.setFont(new Font("Arial", Font.PLAIN, 14));
+        manualText.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+// Add components to text panel
+        textPanel.add(subtitle);
+        textPanel.add(Box.createVerticalStrut(5)); // spacing below subtitle
+        textPanel.add(manualText);
+
+// Add to manual panel and bottom container
+        manualPanel.add(textPanel);
+        bottomPanel.add(manualPanel, BorderLayout.CENTER);
+
+// Add full bottom panel to SOUTH region
+        add(bottomPanel, BorderLayout.SOUTH);
+
+
+
+
+
 
 
     }
