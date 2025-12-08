@@ -155,7 +155,7 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
                         + "• Add Product – Register a new product (Enter Product Name, ID, and Quantity fields)<br>"
                         + "• View Products – Display all items<br>"
                         + "• Delete Product – Remove a product (Enter Product ID field)<br>"
-                        + "• Update Stock – Change quantity (Enter Product ID, and Action field)<br>"
+                        + "• Update Stock – Change quantity (Enter Product ID, and Activity field)<br>"
                         + "• Recent Activities – View latest updates (Enter Product ID)<br>"
                         + "• Exit – Close the system"
                         + "</div></html>"
