@@ -29,7 +29,7 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
 
 
         // ===== Title (North panel) =====
-        JLabel titleLabel = new JLabel("Supermarket Manager System");
+        JLabel titleLabel = new JLabel("Supermarket Management System");
         titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
         titleLabel.setFont(new Font("Arial", Font.BOLD, 26));
         add(titleLabel, BorderLayout.NORTH);
