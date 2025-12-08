@@ -227,16 +227,20 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
 
             String ID = IDTextField.getText().trim();
             String name = nameTextfield.getText().trim();
-            int Quantity = Integer.parseInt(QuantityTextfield.getText().trim());
-            if(nameTextfield.getText().isBlank() &&
-                    IDTextField.getText().isBlank()&&
-                    QuantityTextfield.getText().isBlank())
+
+            if(nameTextfield.getText().isEmpty() ||
+                    IDTextField.getText().isEmpty() ||
+                  QuantityTextfield.getText().isEmpty())
             {
                 JOptionPane.showMessageDialog(frame,
                         "the text Field is Empty!",
                         "Product",
                         JOptionPane.INFORMATION_MESSAGE);
+                return;
+
             }
+
+            int Quantity = Integer.parseInt(QuantityTextfield.getText().trim());
             manager.addProduct(new Product(Quantity, name, ID));
 
             JOptionPane.showMessageDialog(frame,
@@ -310,26 +314,28 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
     {
         try {
             String ID = IDTextField.getText().trim();
-            int Quantity = Integer.parseInt(QuantityTextfield.getText().trim());
+
             String action = ActivityTextField.getText().trim();
-            if (IDTextField.getText().isBlank() &&
-                    QuantityTextfield.getText().isBlank() &&
-                    ActivityTextField.getText().isBlank()) {
+            if (IDTextField.getText().isEmpty() ||
+                    QuantityTextfield.getText().isEmpty()||
+                    ActivityTextField.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(frame,
-                        "the required text field are empty",
+                        "The required text field are empty!",
                         "Update Stock",
                         JOptionPane.WARNING_MESSAGE
                 );
+                return;
             }
+            int Quantity = Integer.parseInt(QuantityTextfield.getText().trim());
             manager.addactivitytoproduct(ID, Quantity, action);
             JOptionPane.showMessageDialog(frame,
-                    "activity  has been added to this Products ID: " + ID,
+                    "Activity has been added to this Products ID: " + ID,
                     "Activity",
                     JOptionPane.INFORMATION_MESSAGE);
 
-        } catch (Exception e) {
+        } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(frame,
-                    "something went wrong! ",
+                    "Some text Field required number Values",
                     "Error",
                     JOptionPane.ERROR_MESSAGE);
 
@@ -346,7 +352,7 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
         if (activityList == null || activityList.size() == 0)
         {
             JOptionPane.showMessageDialog(frame,
-                    "no activities found for that Product ID: " + ID,
+                    "No Activities found for that Product ID: " + ID,
                     "Activity List",
                     JOptionPane.WARNING_MESSAGE);
             return;
