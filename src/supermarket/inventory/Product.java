@@ -59,12 +59,12 @@ public class Product {
         return id;
     }
 
-    public String name(){
+    public String getname(){
 
         return name;
     }
 
-    public LocalDateTime TimeStamp(){
+    public LocalDateTime getTimeStamp(){
 
         return TimeStamp;
     }

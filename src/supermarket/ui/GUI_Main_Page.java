@@ -1,12 +1,15 @@
 package supermarket.ui;
 
+import supermarket.inventory.Activity;
 import supermarket.inventory.Product;
+import supermarket.management.CustomLinkedList;
 import supermarket.management.SupermarketManager;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class GUI_Main_Page extends JPanel implements ActionListener {
 
@@ -15,7 +18,7 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
     private JTextField nameTextfield;
     private JTextField QuantityTextfield;
     private JTextField IDTextField;
-    private JTextField ActionTextField;
+    private JTextField ActivityTextField;
 
     public GUI_Main_Page(GUI_Frame frame, SupermarketManager manager){
         this.frame = frame;
@@ -60,7 +63,10 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
 
         clearBtn.addActionListener(this);
         addProductBtn.addActionListener(this);
-
+        viewProductsBtn.addActionListener(this);
+        deleteProductBtn.addActionListener(this);
+        updateStockBtn.addActionListener(this);
+        recentActivityBtn.addActionListener(this);
         exitBtn.addActionListener(e -> System.exit(0));
 
         add(buttonPanel, BorderLayout.CENTER);
@@ -79,8 +85,8 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
         JLabel quantity =  new JLabel("Quantity:");
         QuantityTextfield =  new JTextField();
 
-        JLabel action = new JLabel("Action:");
-        ActionTextField = new JTextField();
+        JLabel Activity = new JLabel("Activity");
+        ActivityTextField = new JTextField();
 
         formPanel.add(name);
         formPanel.add(nameTextfield);
@@ -88,8 +94,8 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
         formPanel.add(IDTextField);
         formPanel.add(quantity);
         formPanel.add(QuantityTextfield);
-        formPanel.add(action);
-        formPanel.add(ActionTextField);
+        formPanel.add(Activity);
+        formPanel.add(ActivityTextField);
 
         add(formPanel, BorderLayout.CENTER);
 
@@ -188,13 +194,32 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
         {
             addProduct();
         }
+        if (command.equalsIgnoreCase("View Products"))
+        {
+            display_product();
+
+        }
+        if (command.equalsIgnoreCase("delete product"))
+        {
+            delete_product();
+
+        }
+        if (command.equalsIgnoreCase("Update stock"))
+        {
+            update_stock();
+        }
+        if (command.equalsIgnoreCase("Recent Activities"))
+        {
+            Recent_Activities();
+
+        }
     }
     public  void  Clear()
     {
         nameTextfield.setText(" ");
         IDTextField.setText(" ");
         QuantityTextfield.setText(" ");
-        ActionTextField.setText(" ");
+        ActivityTextField.setText(" ");
     }
     public  void addProduct() {
         try {
@@ -213,6 +238,7 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
                         JOptionPane.INFORMATION_MESSAGE);
             }
             manager.addProduct(new Product(Quantity, name, ID));
+
             JOptionPane.showMessageDialog(frame,
                     "add product\n"+ "was successfully added",
                     "Product",
@@ -220,12 +246,132 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(frame,
                     "please check your details for any error\n"+
-                            " some field requried numerical Values",
+                            " some field required numerical Values",
                     "Product",
                     JOptionPane.INFORMATION_MESSAGE);
 
         }
     }
+    public void display_product()
+    {
+        ArrayList<Product> products = manager.listproducts();
+        if (products == null || products.isEmpty())
+        {
+            JOptionPane.showMessageDialog(frame,
+                    " no Product found : " ,
+                    " Product List",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        JTextArea textArea = new JTextArea(20,40);
+        textArea.setEditable(false);
+        StringBuilder message = new StringBuilder();
+
+        for (Product value : products) {
+            message.append(value.toString()).append("\n");
+
+        }
+        textArea.setText(message.toString());
+
+        JScrollPane scrollPane = new JScrollPane(textArea);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+
+        JFrame productFrame = new JFrame("Product list");
+        productFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        productFrame.add(scrollPane);
+        productFrame.pack();
+        productFrame.setLocationRelativeTo(frame);
+        productFrame.setVisible(true);
+
+    }
+    public void delete_product()
+    {
+
+            String ID = IDTextField.getText().trim();
+            Product deletedID = manager.deleteproducts(ID);
+            if (deletedID  == null) {
+                JOptionPane.showMessageDialog(frame,
+                        " Product ID doesn't exist",
+                        "Product",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+            else {
+                JOptionPane.showMessageDialog(frame,
+                        "Product has been removed ",
+                        "Product",
+                        JOptionPane.INFORMATION_MESSAGE);
+            }
+
+
+
+    }
+    public void update_stock()
+    {
+        try {
+            String ID = IDTextField.getText().trim();
+            int Quantity = Integer.parseInt(QuantityTextfield.getText().trim());
+            String action = ActivityTextField.getText().trim();
+            if (IDTextField.getText().isBlank() &&
+                    QuantityTextfield.getText().isBlank() &&
+                    ActivityTextField.getText().isBlank()) {
+                JOptionPane.showMessageDialog(frame,
+                        "the required text field are empty",
+                        "Update Stock",
+                        JOptionPane.WARNING_MESSAGE
+                );
+            }
+            manager.addactivitytoproduct(ID, Quantity, action);
+            JOptionPane.showMessageDialog(frame,
+                    "activity  has been added to this Products ID: " + ID,
+                    "Activity",
+                    JOptionPane.INFORMATION_MESSAGE);
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(frame,
+                    "something went wrong! ",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+
+
+        }
+
+    }
+    public void Recent_Activities()
+    {
+        String ID =IDTextField.getText().trim();
+
+        CustomLinkedList<Activity> activityList = manager.lastFourSortedBYQuantity(ID);
+
+        if (activityList == null || activityList.size() == 0)
+        {
+            JOptionPane.showMessageDialog(frame,
+                    "no activities found for that Product ID: " + ID,
+                    "Activity List",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        StringBuilder message  = new StringBuilder();
+        message.append("Recent Activities for Product ID: ").append(ID).append("\n");
+
+        for (int i = 0; i < activityList.size(); i++) {
+            message.append(activityList.get(i).toString()).append("\n\n");
+        }
+
+        JTextArea textArea = new JTextArea(message.toString());
+        textArea.setEditable(false);
+
+        JScrollPane scrollPane = new JScrollPane(textArea);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+
+        JFrame activityFrame = new JFrame("Activity list");
+        activityFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        activityFrame.add(scrollPane);
+        activityFrame.pack();
+        activityFrame.setLocationRelativeTo(frame);
+        activityFrame.setVisible(true);
+    }
+
 
 
 
