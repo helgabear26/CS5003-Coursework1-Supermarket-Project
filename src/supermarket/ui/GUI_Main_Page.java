@@ -144,7 +144,7 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
         textPanel.setOpaque(false);
 
 // Subtitle label — moved slightly up
-        JLabel subtitle = new JLabel("System Manual:");
+        JLabel subtitle = new JLabel("User Manual:");
         subtitle.setFont(new Font("Arial", Font.BOLD, 16));
         subtitle.setAlignmentX(Component.CENTER_ALIGNMENT);
         subtitle.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0)); // << shift subtitle up
