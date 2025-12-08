@@ -85,7 +85,7 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
         JLabel quantity =  new JLabel("Quantity:");
         QuantityTextfield =  new JTextField();
 
-        JLabel Activity = new JLabel("Activity");
+        JLabel Activity = new JLabel("Activity:");
         ActivityTextField = new JTextField();
 
         formPanel.add(name);
