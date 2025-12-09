@@ -17,17 +17,42 @@ public class GUI_Frame extends JFrame {
         manager = new SupermarketManager();
 
         setContentPane(new GUI_Login_Page(this, adminInventory, manager));
+        setJMenuBar(null);
         setVisible(true);
     }
 
+
+
+
+
     public void showGUI_Main_Page() {
         setContentPane(new GUI_Main_Page(this, manager));
+        setJMenuBar(menuBar());
         revalidate();
+        repaint();
     }
 
     public void showGUI_Login_Page() {
         setContentPane(new GUI_Login_Page(this, adminInventory, manager));
+        setJMenuBar(null);
         revalidate();
+    }
+
+    private JMenuBar menuBar() {
+        JMenuBar menuBar = new JMenuBar();
+
+        JMenu fileMenu = new JMenu("File");
+        JMenuItem saveActions = new JMenuItem("Save");
+
+        fileMenu.add(saveActions);
+        // fileMenu.addSeparator();
+        menuBar.add(fileMenu);
+
+        saveActions.addActionListener(e -> {
+            JOptionPane.showMessageDialog(this, "Products successfully saved! ");
+        });
+
+        return menuBar;
     }
 
 
