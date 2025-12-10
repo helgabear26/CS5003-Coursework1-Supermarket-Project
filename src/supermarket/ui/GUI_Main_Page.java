@@ -348,7 +348,7 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
             }
             int Quantity = Integer.parseInt(QuantityTextfield.getText().trim());
 
-            // Quantity must be > 0
+            // Prevent zero or negative quantity
             if (Quantity <= 0) {
                 JOptionPane.showMessageDialog(frame,
                         "Quantity must be greater than 0.",
@@ -357,6 +357,40 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
                 return;
             }
 
+            // Check if removing stock
+            boolean isRemoving = action.equalsIgnoreCase("remove")
+                    || action.equalsIgnoreCase("decrease")
+                    || action.equalsIgnoreCase("deduct");
+
+            if (isRemoving) {
+                // Look for the product with the given ID
+                Product target = null;
+                for (Product p : manager.listproducts()) {
+                    if (p.getId().equalsIgnoreCase(ID)) {
+                        target = p;
+                        break;
+                    }
+                }
+
+                if (target == null) {
+                    JOptionPane.showMessageDialog(frame,
+                            "Invalid Product ID.",
+                            "Update Stock Error",
+                            JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                // Prevent removing stock when quantity is already zero
+                if (target.getQuantity() == 0) {
+                    JOptionPane.showMessageDialog(frame,
+                            "This product already has 0 stock.\nYou cannot remove any more.",
+                            "Update Stock Error",
+                            JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+            }
+
+            // Update the product activity
             manager.addactivitytoproduct(ID, Quantity, action);
             JOptionPane.showMessageDialog(frame,
                     "Activity has been added to Product ID: " + ID,
@@ -368,8 +402,6 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
                     "Some fields require numerical values.",
                     "Error",
                     JOptionPane.ERROR_MESSAGE);
-
-
         }
 
     }
