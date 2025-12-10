@@ -221,6 +221,8 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
         QuantityTextfield.setText(" ");
         ActivityTextField.setText(" ");
     }
+
+    // Add product procedure
     public  void addProduct() {
         try {
 
@@ -241,6 +243,19 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
             }
 
             int Quantity = Integer.parseInt(QuantityTextfield.getText().trim());
+
+
+            // Quantity must be > 0
+            if (Quantity <= 0) {
+                JOptionPane.showMessageDialog(frame,
+                        "Quantity must be greater than 0.",
+                        "Add Product Error",
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+
+
             manager.addProduct(new Product(Quantity, name, ID));
 
             JOptionPane.showMessageDialog(frame,
@@ -255,6 +270,8 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
 
         }
     }
+
+    // View product procedure
     public void display_product()
     {
         ArrayList<Product> products = manager.listproducts();
@@ -288,6 +305,8 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
         productFrame.setVisible(true);
 
     }
+
+    // Delete product procedure
     public void delete_product()
     {
 
@@ -296,7 +315,7 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
             if (deletedID  == null) {
                 JOptionPane.showMessageDialog(frame,
                         "Invalid Product ID.",
-                        "Delete Product",
+                        "Delete Product Error",
                         JOptionPane.ERROR_MESSAGE);
             }
             else {
@@ -309,6 +328,8 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
 
 
     }
+
+    // Update stock procedure
     public void update_stock()
     {
         try {
@@ -326,6 +347,16 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
                 return;
             }
             int Quantity = Integer.parseInt(QuantityTextfield.getText().trim());
+
+            // Quantity must be > 0
+            if (Quantity <= 0) {
+                JOptionPane.showMessageDialog(frame,
+                        "Quantity must be greater than 0.",
+                        "Update Stock Error",
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
             manager.addactivitytoproduct(ID, Quantity, action);
             JOptionPane.showMessageDialog(frame,
                     "Activity has been added to Product ID: " + ID,
@@ -342,6 +373,8 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
         }
 
     }
+
+    // View last 4 recent activities procedure
     public void Recent_Activities()
     {
         String ID =IDTextField.getText().trim();
