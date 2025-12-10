@@ -360,7 +360,7 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
             // Check if removing stock
             boolean isRemoving = action.equalsIgnoreCase("remove")
                     || action.equalsIgnoreCase("decrease")
-                    || action.equalsIgnoreCase("deduct");
+                    || action.equalsIgnoreCase("delete");
 
             if (isRemoving) {
                 // Look for the product with the given ID
