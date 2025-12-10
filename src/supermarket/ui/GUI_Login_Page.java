@@ -38,7 +38,7 @@ public class GUI_Login_Page extends JPanel {
             String username = usernameField.getText();
             String password = new String(passwordField.getPassword());
             if (adminInventory.validate(username, password)) {
-                JOptionPane.showMessageDialog(frame,"Login Successful");
+                JOptionPane.showMessageDialog(frame,"Login Successful.");
                 frame.showGUI_Main_Page();
             } else {
                 JOptionPane.showMessageDialog(frame, "Non-valid input. Try again! ");

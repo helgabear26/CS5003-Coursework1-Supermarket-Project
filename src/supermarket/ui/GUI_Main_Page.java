@@ -233,8 +233,8 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
                   QuantityTextfield.getText().isEmpty())
             {
                 JOptionPane.showMessageDialog(frame,
-                        "the text Field is Empty!",
-                        "Product",
+                        "The required text fields are empty!\nRefer to User Manual.",
+                        "Add Product",
                         JOptionPane.INFORMATION_MESSAGE);
                 return;
 
@@ -244,14 +244,13 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
             manager.addProduct(new Product(Quantity, name, ID));
 
             JOptionPane.showMessageDialog(frame,
-                    "add product\n"+ "was successfully added",
-                    "Product",
+                    "Product has been successfully added.",
+                    "Add Product",
                     JOptionPane.INFORMATION_MESSAGE);
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(frame,
-                    "please check your details for any error\n"+
-                            " some field required numerical Values",
-                    "Product",
+                    "Some fields require numerical values.",
+                    "Add Product",
                     JOptionPane.INFORMATION_MESSAGE);
 
         }
@@ -262,8 +261,8 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
         if (products == null || products.isEmpty())
         {
             JOptionPane.showMessageDialog(frame,
-                    " no Product found : " ,
-                    " Product List",
+                    "No Product(s) found." ,
+                    "Display Product(s)",
                     JOptionPane.WARNING_MESSAGE);
             return;
         }
@@ -281,7 +280,7 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
         JScrollPane scrollPane = new JScrollPane(textArea);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
-        JFrame productFrame = new JFrame("Product list");
+        JFrame productFrame = new JFrame("Product List");
         productFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         productFrame.add(scrollPane);
         productFrame.pack();
@@ -296,14 +295,14 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
             Product deletedID = manager.deleteproducts(ID);
             if (deletedID  == null) {
                 JOptionPane.showMessageDialog(frame,
-                        " Product ID doesn't exist",
-                        "Product",
+                        "Invalid Product ID.",
+                        "Delete Product",
                         JOptionPane.ERROR_MESSAGE);
             }
             else {
                 JOptionPane.showMessageDialog(frame,
-                        "Product has been removed ",
-                        "Product",
+                        "Product has been removed.",
+                        "Delete Product",
                         JOptionPane.INFORMATION_MESSAGE);
             }
 
@@ -320,22 +319,22 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
                     QuantityTextfield.getText().isEmpty()||
                     ActivityTextField.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(frame,
-                        "The required text field are empty!",
+                        "The required text fields are empty!\nRefer to User Manual.",
                         "Update Stock",
-                        JOptionPane.WARNING_MESSAGE
+                        JOptionPane.INFORMATION_MESSAGE
                 );
                 return;
             }
             int Quantity = Integer.parseInt(QuantityTextfield.getText().trim());
             manager.addactivitytoproduct(ID, Quantity, action);
             JOptionPane.showMessageDialog(frame,
-                    "Activity has been added to this Products ID: " + ID,
-                    "Activity",
+                    "Activity has been added to Product ID: " + ID,
+                    "Update Stock",
                     JOptionPane.INFORMATION_MESSAGE);
 
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(frame,
-                    "Some text Field required number Values",
+                    "Some fields require numerical values.",
                     "Error",
                     JOptionPane.ERROR_MESSAGE);
 
@@ -352,8 +351,8 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
         if (activityList == null || activityList.size() == 0)
         {
             JOptionPane.showMessageDialog(frame,
-                    "No Activities found for that Product ID: " + ID,
-                    "Activity List",
+                    "No Activities found for that Product ID.",
+                    "Recent Activities",
                     JOptionPane.WARNING_MESSAGE);
             return;
         }
@@ -370,7 +369,7 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
         JScrollPane scrollPane = new JScrollPane(textArea);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
-        JFrame activityFrame = new JFrame("Activity list");
+        JFrame activityFrame = new JFrame("Activity List");
         activityFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         activityFrame.add(scrollPane);
         activityFrame.pack();
