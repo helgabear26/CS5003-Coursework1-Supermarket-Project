@@ -94,6 +94,7 @@ public class Product {
 
             // Removes items from stock
             quantity -= amount;
+
         }
     }
 
