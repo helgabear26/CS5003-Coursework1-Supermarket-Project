@@ -331,6 +331,7 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
 
     }
 
+    // Update stock procedure (changing stock quantity)
     public void update_stock() {
         try {
             String ID = IDTextField.getText().trim();
