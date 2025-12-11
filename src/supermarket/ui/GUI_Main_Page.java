@@ -221,6 +221,8 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
         QuantityTextfield.setText(" ");
         ActivityTextField.setText(" ");
     }
+
+    // Add product procedure
     public  void addProduct() {
         try {
 
@@ -241,6 +243,19 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
             }
 
             int Quantity = Integer.parseInt(QuantityTextfield.getText().trim());
+
+
+            // Quantity must be > 0
+            if (Quantity <= 0) {
+                JOptionPane.showMessageDialog(frame,
+                        "Quantity must be greater than 0.",
+                        "Add Product Error",
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+
+
             manager.addProduct(new Product(Quantity, name, ID));
 
             JOptionPane.showMessageDialog(frame,
@@ -255,6 +270,8 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
 
         }
     }
+
+    // View product procedure
     public void display_product()
     {
         ArrayList<Product> products = manager.listproducts();
@@ -288,6 +305,8 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
         productFrame.setVisible(true);
 
     }
+
+    // Delete product procedure
     public void delete_product()
     {
 
@@ -296,7 +315,7 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
             if (deletedID  == null) {
                 JOptionPane.showMessageDialog(frame,
                         "Invalid Product ID.",
-                        "Delete Product",
+                        "Delete Product Error",
                         JOptionPane.ERROR_MESSAGE);
             }
             else {
@@ -309,6 +328,8 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
 
 
     }
+
+    // Update stock procedure
     public void update_stock()
     {
         try {
@@ -326,6 +347,50 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
                 return;
             }
             int Quantity = Integer.parseInt(QuantityTextfield.getText().trim());
+
+            // Prevent zero or negative quantity
+            if (Quantity <= 0) {
+                JOptionPane.showMessageDialog(frame,
+                        "Quantity must be greater than 0.",
+                        "Update Stock Error",
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // Check if removing stock
+            boolean isRemoving = action.equalsIgnoreCase("remove")
+                    || action.equalsIgnoreCase("decrease")
+                    || action.equalsIgnoreCase("delete");
+
+            if (isRemoving) {
+                // Look for the product with the given ID
+                Product target = null;
+                for (Product p : manager.listproducts()) {
+                    if (p.getId().equalsIgnoreCase(ID)) {
+                        target = p;
+                        break;
+                    }
+                }
+
+                if (target == null) {
+                    JOptionPane.showMessageDialog(frame,
+                            "Invalid Product ID.",
+                            "Update Stock Error",
+                            JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                // Prevent removing stock when quantity is already zero
+                if (target.getQuantity() == 0) {
+                    JOptionPane.showMessageDialog(frame,
+                            "This product already has 0 stock.\nYou cannot remove any more.",
+                            "Update Stock Error",
+                            JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+            }
+
+            // Update the product activity
             manager.addactivitytoproduct(ID, Quantity, action);
             JOptionPane.showMessageDialog(frame,
                     "Activity has been added to Product ID: " + ID,
@@ -337,11 +402,11 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
                     "Some fields require numerical values.",
                     "Error",
                     JOptionPane.ERROR_MESSAGE);
-
-
         }
 
     }
+
+    // View last 4 recent activities procedure
     public void Recent_Activities()
     {
         String ID =IDTextField.getText().trim();
