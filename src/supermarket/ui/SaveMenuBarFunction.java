@@ -16,7 +16,10 @@ public class SaveMenuBarFunction {
 
             for (Product p : products) {
                 bufferedWriter.write(
-                        p.getId() + "," + p.getname() + "," + p.getQuantity() + "," + p.getTimeStamp());
+                        p.getId() + "," +
+                                p.getname() + "," +
+                                p.getQuantity() + "," +
+                                p.getTimeStamp());
                 bufferedWriter.newLine();
             }
             System.out.println("Products successfully saved to " + SaveActivities);
