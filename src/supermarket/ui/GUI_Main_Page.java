@@ -86,7 +86,7 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
         QuantityTextfield =  new JTextField();
 
         JLabel Activity = new JLabel("Activity:");
-        String [] activityOptions = {"Add to stock", "Remove from stock"};
+        String [] activityOptions = {"Add", "Remove"};
         ActivityCombobox = new JComboBox<>(activityOptions);
 
 
@@ -339,7 +339,7 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
 
             String action = (String) ActivityCombobox.getSelectedItem();
             if (IDTextField.getText().isEmpty() ||
-                    QuantityTextfield.getText().isEmpty()||
+                    QuantityTextfield.getText().isEmpty() ||
                     ActivityCombobox.getSelectedItem() == null) {
                 JOptionPane.showMessageDialog(frame,
                         "The required text fields are empty!\nRefer to User Manual.",
@@ -359,29 +359,26 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
                 return;
             }
 
-            // Check if removing stock
-            boolean isRemoving = action.equalsIgnoreCase("remove")
-                    || action.equalsIgnoreCase("decrease")
-                    || action.equalsIgnoreCase("deduct");
 
-            if (isRemoving) {
-                // Look for the product with the given ID
-                Product target = null;
-                for (Product p : manager.listproducts()) {
-                    if (p.getId().equalsIgnoreCase(ID)) {
-                        target = p;
-                        break;
-                    }
+            // Look for the product with the given ID
+            Product target = null;
+            for (Product p : manager.listproducts()) {
+                if (p.getId().equalsIgnoreCase(ID)) {
+                    target = p;
+                    break;
                 }
+            }
 
-                if (target == null) {
-                    JOptionPane.showMessageDialog(frame,
-                            "Invalid Product ID.",
-                            "Update Stock Error",
-                            JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
+            if (target == null) {
+                JOptionPane.showMessageDialog(frame,
+                        "Invalid Product ID.",
+                        "Update Stock Error",
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
 
+
+             if (action.equalsIgnoreCase("Remove")) {
 
                 int stock = target.getQuantity();
                 // Prevent removing stock when quantity is already zero
@@ -392,18 +389,17 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
                             JOptionPane.ERROR_MESSAGE);
                     return;
                 }
-
                 // trying to remove more than available quantity
-                if (Quantity > stock)
-                {
+                if (Quantity > stock) {
                     JOptionPane.showMessageDialog(frame,
                             "cannot remove more than avaialbe stock.\n" +
-                            "Available: "+ stock + ", Requested amount to removed: "+ Quantity,
+                                    "Available: " + stock + ", Requested amount to removed: " + Quantity,
                             "Update stock Error",
                             JOptionPane.ERROR_MESSAGE);
+                    return;
                 }
-                return;
-            }
+
+              }
 
             // Update the product activity
             manager.addactivitytoproduct(ID, Quantity, action);
