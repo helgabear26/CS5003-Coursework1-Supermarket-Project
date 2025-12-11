@@ -15,11 +15,10 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
 
     private GUI_Frame frame;
     private SupermarketManager manager;
-    // for input for product name, Quantity And Product ID
     private JTextField nameTextfield;
     private JTextField QuantityTextfield;
     private JTextField IDTextField;
-    private JComboBox<String> ActivityCombo;
+    private JTextField ActivityTextField;
 
     public GUI_Main_Page(GUI_Frame frame, SupermarketManager manager){
         this.frame = frame;
@@ -61,7 +60,7 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
         buttonPanel.add(exitBtn);
 
 
-    //
+
         clearBtn.addActionListener(this);
         addProductBtn.addActionListener(this);
         viewProductsBtn.addActionListener(this);
@@ -87,8 +86,7 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
         QuantityTextfield =  new JTextField();
 
         JLabel Activity = new JLabel("Activity:");
-        String [] activityOptions =  {"Add", "Remove"};
-        ActivityCombo = new JComboBox<>(activityOptions);
+        ActivityTextField = new JTextField();
 
         formPanel.add(name);
         formPanel.add(nameTextfield);
@@ -97,7 +95,7 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
         formPanel.add(quantity);
         formPanel.add(QuantityTextfield);
         formPanel.add(Activity);
-        formPanel.add(ActivityCombo);
+        formPanel.add(ActivityTextField);
 
         add(formPanel, BorderLayout.CENTER);
 
@@ -180,55 +178,48 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
 
 
 
-    }
 
-    // this for the actionPerformed Implementation
+
+
+    }
     public void  actionPerformed(ActionEvent event)
     {
-        // extract command text from event
         String command = event.getActionCommand();
 
         if (command.equalsIgnoreCase("clear"))
         {
-            // call the clear method
             Clear();
         }
         if (command.equalsIgnoreCase("add product"))
         {
-            // call add product method
             addProduct();
         }
         if (command.equalsIgnoreCase("View Products"))
         {
-            // call display product
             display_product();
 
         }
         if (command.equalsIgnoreCase("delete product"))
         {
-            // call the delete product
             delete_product();
 
         }
         if (command.equalsIgnoreCase("Update stock"))
         {
-            // call the Update the stock method
             update_stock();
         }
         if (command.equalsIgnoreCase("Recent Activities"))
         {
-            // call the activities methods
             Recent_Activities();
 
         }
     }
-
     public  void  Clear()
     {
         nameTextfield.setText(" ");
         IDTextField.setText(" ");
         QuantityTextfield.setText(" ");
-        ActivityCombo.setSelectedIndex(-1);
+        ActivityTextField.setText(" ");
     }
 
     // Add product procedure
@@ -344,10 +335,10 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
         try {
             String ID = IDTextField.getText().trim();
 
-            String action = (String) ActivityCombo.getSelectedItem();
+            String action = ActivityTextField.getText().trim();
             if (IDTextField.getText().isEmpty() ||
                     QuantityTextfield.getText().isEmpty()||
-                    ActivityCombo.getSelectedItem()== null) {
+                    ActivityTextField.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(frame,
                         "The required text fields are empty!\nRefer to User Manual.",
                         "Update Stock",
@@ -367,8 +358,9 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
             }
 
             // Check if removing stock
-            boolean isRemoving = action.equalsIgnoreCase("remove");
-
+            boolean isRemoving = action.equalsIgnoreCase("remove")
+                    || action.equalsIgnoreCase("decrease")
+                    || action.equalsIgnoreCase("deduct");
 
             if (isRemoving) {
                 // Look for the product with the given ID
@@ -389,25 +381,11 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
                 }
 
                 // Prevent removing stock when quantity is already zero
-                int stock = target.getQuantity();
-
-                // check if quantity is zero print out this methods
-                if (stock == 0) {
+                if (target.getQuantity() == 0) {
                     JOptionPane.showMessageDialog(frame,
                             "This product already has 0 stock.\nYou cannot remove any more.",
                             "Update Stock Error",
                             JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-
-                // try to remove more than available
-                if (Quantity > stock )
-                {
-                    JOptionPane.showMessageDialog(frame,
-                    "Cannot remove more than available stock.\n"+
-                            "Available: "+ stock +", Requested amount: "+ Quantity,
-                            "Update Stock Error",
-                            JOptionPane.WARNING_MESSAGE);
                     return;
                 }
             }

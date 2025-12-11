@@ -45,11 +45,12 @@ public class GUI_Frame extends JFrame {
         JMenuItem saveActions = new JMenuItem("Save");
 
         fileMenu.add(saveActions);
-        // fileMenu.addSeparator();
         menuBar.add(fileMenu);
 
         saveActions.addActionListener(e -> {
-            JOptionPane.showMessageDialog(this, "Products successfully saved! ");
+            manager.SaveMenuBarFunction("SaveActivities.txt");
+
+            JOptionPane.showMessageDialog(this, "Products have been successfully saved! ", "Save action confirmed", JOptionPane.INFORMATION_MESSAGE);
         });
 
         return menuBar;
