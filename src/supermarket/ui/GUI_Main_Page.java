@@ -18,7 +18,7 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
     private JTextField nameTextfield;
     private JTextField QuantityTextfield;
     private JTextField IDTextField;
-    private JComboBox<String> ActivityCombobox;
+    private JTextField AcFieldtivityTextField;
 
     public GUI_Main_Page(GUI_Frame frame, SupermarketManager manager){
         this.frame = frame;
@@ -29,7 +29,7 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
 
 
         // ===== Title (North panel) =====
-        JLabel titleLabel = new JLabel("Supermarket Management System");
+        JLabel titleLabel = new JLabel("Supermarket Manager System");
         titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
         titleLabel.setFont(new Font("Arial", Font.BOLD, 26));
         add(titleLabel, BorderLayout.NORTH);
@@ -86,9 +86,7 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
         QuantityTextfield =  new JTextField();
 
         JLabel Activity = new JLabel("Activity:");
-        String [] activityOptions = {"Add", "Remove"};
-        ActivityCombobox = new JComboBox<>(activityOptions);
-
+        ActivityTextField = new JTextField();
 
         formPanel.add(name);
         formPanel.add(nameTextfield);
@@ -97,7 +95,7 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
         formPanel.add(quantity);
         formPanel.add(QuantityTextfield);
         formPanel.add(Activity);
-        formPanel.add(ActivityCombobox);
+        formPanel.add(ActivityTextField);
 
         add(formPanel, BorderLayout.CENTER);
 
@@ -146,7 +144,7 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
         textPanel.setOpaque(false);
 
 // Subtitle label — moved slightly up
-        JLabel subtitle = new JLabel("User Manual:");
+        JLabel subtitle = new JLabel("System Manual:");
         subtitle.setFont(new Font("Arial", Font.BOLD, 16));
         subtitle.setAlignmentX(Component.CENTER_ALIGNMENT);
         subtitle.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0)); // << shift subtitle up
@@ -157,7 +155,7 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
                         + "• Add Product – Register a new product (Enter Product Name, ID, and Quantity fields)<br>"
                         + "• View Products – Display all items<br>"
                         + "• Delete Product – Remove a product (Enter Product ID field)<br>"
-                        + "• Update Stock – Change quantity (Enter Product ID, Quantity, and Activity field)<br>"
+                        + "• Update Stock – Change quantity (Enter Product ID, and Activity field)<br>"
                         + "• Recent Activities – View latest updates (Enter Product ID)<br>"
                         + "• Exit – Close the system"
                         + "</div></html>"
@@ -221,67 +219,47 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
         nameTextfield.setText(" ");
         IDTextField.setText(" ");
         QuantityTextfield.setText(" ");
-        ActivityCombobox.setSelectedIndex(-1);
+        ActivityTextField.setText(" ");
     }
-
-    // Add product procedure
     public  void addProduct() {
         try {
 
 
             String ID = IDTextField.getText().trim();
             String name = nameTextfield.getText().trim();
-
-            if(nameTextfield.getText().isEmpty() ||
-                    IDTextField.getText().isEmpty() ||
-                  QuantityTextfield.getText().isEmpty())
+            int Quantity = Integer.parseInt(QuantityTextfield.getText().trim());
+            if(nameTextfield.getText().isBlank() &&
+                    IDTextField.getText().isBlank()&&
+                    QuantityTextfield.getText().isBlank())
             {
                 JOptionPane.showMessageDialog(frame,
-                        "The required text fields are empty!\nRefer to User Manual.",
-                        "Add Product",
+                        "the text Field is Empty!",
+                        "Product",
                         JOptionPane.INFORMATION_MESSAGE);
-                return;
-
             }
-
-            int Quantity = Integer.parseInt(QuantityTextfield.getText().trim());
-
-
-            // Quantity must be > 0
-            if (Quantity <= 0) {
-                JOptionPane.showMessageDialog(frame,
-                        "Quantity must be greater than 0.",
-                        "Add Product Error",
-                        JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-
-
-
             manager.addProduct(new Product(Quantity, name, ID));
 
             JOptionPane.showMessageDialog(frame,
-                    "Product has been successfully added.",
-                    "Add Product",
+                    "add product\n"+ "was successfully added",
+                    "Product",
                     JOptionPane.INFORMATION_MESSAGE);
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(frame,
-                    "Some fields require numerical values.",
-                    "Add Product",
+                    "please check your details for any error\n"+
+                            " some field required numerical Values",
+                    "Product",
                     JOptionPane.INFORMATION_MESSAGE);
 
         }
     }
-
-    // View product procedure
     public void display_product()
     {
         ArrayList<Product> products = manager.listproducts();
         if (products == null || products.isEmpty())
         {
             JOptionPane.showMessageDialog(frame,
-                    "No Product(s) found." ,
-                    "Display Product(s)",
+                    " no Product found : " ,
+                    " Product List",
                     JOptionPane.WARNING_MESSAGE);
             return;
         }
@@ -299,7 +277,7 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
         JScrollPane scrollPane = new JScrollPane(textArea);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
-        JFrame productFrame = new JFrame("Product List");
+        JFrame productFrame = new JFrame("Product list");
         productFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         productFrame.add(scrollPane);
         productFrame.pack();
@@ -307,8 +285,6 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
         productFrame.setVisible(true);
 
     }
-
-    // Delete product procedure
     public void delete_product()
     {
 
@@ -316,108 +292,51 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
             Product deletedID = manager.deleteproducts(ID);
             if (deletedID  == null) {
                 JOptionPane.showMessageDialog(frame,
-                        "Invalid Product ID.",
-                        "Delete Product Error",
+                        " Product ID doesn't exist",
+                        "Product",
                         JOptionPane.ERROR_MESSAGE);
             }
             else {
                 JOptionPane.showMessageDialog(frame,
-                        "Product has been removed.",
-                        "Delete Product",
+                        "Product has been removed ",
+                        "Product",
                         JOptionPane.INFORMATION_MESSAGE);
             }
 
 
 
     }
-
-    // Update stock procedure
     public void update_stock()
     {
         try {
             String ID = IDTextField.getText().trim();
-
-            String action = (String) ActivityCombobox.getSelectedItem();
-            if (IDTextField.getText().isEmpty() ||
-                    QuantityTextfield.getText().isEmpty() ||
-                    ActivityCombobox.getSelectedItem() == null) {
-                JOptionPane.showMessageDialog(frame,
-                        "The required text fields are empty!\nRefer to User Manual.",
-                        "Update Stock",
-                        JOptionPane.INFORMATION_MESSAGE
-                );
-                return;
-            }
             int Quantity = Integer.parseInt(QuantityTextfield.getText().trim());
-
-            // Prevent zero or negative quantity
-            if (Quantity <= 0) {
+            String action = ActivityTextField.getText().trim();
+            if (IDTextField.getText().isBlank() &&
+                    QuantityTextfield.getText().isBlank() &&
+                    ActivityTextField.getText().isBlank()) {
                 JOptionPane.showMessageDialog(frame,
-                        "Quantity must be greater than 0.",
-                        "Update Stock Error",
-                        JOptionPane.ERROR_MESSAGE);
-                return;
+                        "the required text field are empty",
+                        "Update Stock",
+                        JOptionPane.WARNING_MESSAGE
+                );
             }
-
-
-            // Look for the product with the given ID
-            Product target = null;
-            for (Product p : manager.listproducts()) {
-                if (p.getId().equalsIgnoreCase(ID)) {
-                    target = p;
-                    break;
-                }
-            }
-
-            if (target == null) {
-                JOptionPane.showMessageDialog(frame,
-                        "Invalid Product ID.",
-                        "Update Stock Error",
-                        JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-
-
-             if (action.equalsIgnoreCase("Remove")) {
-
-                int stock = target.getQuantity();
-                // Prevent removing stock when quantity is already zero
-                if (stock == 0) {
-                    JOptionPane.showMessageDialog(frame,
-                            "This product already has 0 stock.\nYou cannot remove any more.",
-                            "Update Stock Error",
-                            JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-                // trying to remove more than available quantity
-                if (Quantity > stock) {
-                    JOptionPane.showMessageDialog(frame,
-                            "cannot remove more than avaialbe stock.\n" +
-                                    "Available: " + stock + ", Requested amount to removed: " + Quantity,
-                            "Update stock Error",
-                            JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-
-              }
-
-            // Update the product activity
             manager.addactivitytoproduct(ID, Quantity, action);
             JOptionPane.showMessageDialog(frame,
-                    "Activity has been added to Product ID: " + ID,
-                    "Update Stock",
+                    "activity  has been added to this Products ID: " + ID,
+                    "Activity",
                     JOptionPane.INFORMATION_MESSAGE);
 
-        } catch (NumberFormatException e) {
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(frame,
-                    "Some fields require numerical values.",
+                    "something went wrong! ",
                     "Error",
                     JOptionPane.ERROR_MESSAGE);
+
+
         }
 
     }
-
-    // View last 4 recent activities procedure
     public void Recent_Activities()
     {
         String ID =IDTextField.getText().trim();
@@ -427,8 +346,8 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
         if (activityList == null || activityList.size() == 0)
         {
             JOptionPane.showMessageDialog(frame,
-                    "No Activities found for that Product ID.",
-                    "Recent Activities",
+                    "no activities found for that Product ID: " + ID,
+                    "Activity List",
                     JOptionPane.WARNING_MESSAGE);
             return;
         }
@@ -445,7 +364,7 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
         JScrollPane scrollPane = new JScrollPane(textArea);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
-        JFrame activityFrame = new JFrame("Activity List");
+        JFrame activityFrame = new JFrame("Activity list");
         activityFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         activityFrame.add(scrollPane);
         activityFrame.pack();
