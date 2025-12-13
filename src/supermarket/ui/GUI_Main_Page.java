@@ -331,23 +331,24 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
 
     }
 
-    // Update stock procedure
-    public void update_stock()
-    {
+    // Update stock procedure (changing stock quantity)
+    public void update_stock() {
         try {
             String ID = IDTextField.getText().trim();
+            String selected = (String) ActivityCombobox.getSelectedItem();
 
-            String action = (String) ActivityCombobox.getSelectedItem();
-            if (IDTextField.getText().isEmpty() ||
-                    QuantityTextfield.getText().isEmpty()||
-                    ActivityCombobox.getSelectedItem() == null) {
+            // Required fields check
+            if (ID.isEmpty() ||
+                    QuantityTextfield.getText().trim().isEmpty() ||
+                    selected == null) {
+
                 JOptionPane.showMessageDialog(frame,
                         "The required text fields are empty!\nRefer to User Manual.",
                         "Update Stock",
-                        JOptionPane.INFORMATION_MESSAGE
-                );
+                        JOptionPane.INFORMATION_MESSAGE);
                 return;
             }
+
             int Quantity = Integer.parseInt(QuantityTextfield.getText().trim());
 
             // Prevent zero or negative quantity
@@ -359,14 +360,14 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
                 return;
             }
 
-            // Check if removing stock
-            boolean isRemoving = action.equalsIgnoreCase("remove")
-                    || action.equalsIgnoreCase("decrease")
-                    || action.equalsIgnoreCase("deduct");
+            // Convert combo box choice → simple keyword ("add" / "remove")
+            boolean isRemoving = selected.equalsIgnoreCase("Remove from stock");
+            String action = isRemoving ? "remove" : "add";
 
+            // If removing, validate stock
             if (isRemoving) {
-                // Look for the product with the given ID
                 Product target = null;
+
                 for (Product p : manager.listproducts()) {
                     if (p.getId().equalsIgnoreCase(ID)) {
                         target = p;
@@ -382,9 +383,8 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
                     return;
                 }
 
-
                 int stock = target.getQuantity();
-                // Prevent removing stock when quantity is already zero
+
                 if (stock == 0) {
                     JOptionPane.showMessageDialog(frame,
                             "This product already has 0 stock.\nYou cannot remove any more.",
@@ -393,20 +393,19 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
                     return;
                 }
 
-                // trying to remove more than available quantity
-                if (Quantity > stock)
-                {
+                if (Quantity > stock) {
                     JOptionPane.showMessageDialog(frame,
-                            "cannot remove more than avaialbe stock.\n" +
-                            "Available: "+ stock + ", Requested amount to removed: "+ Quantity,
-                            "Update stock Error",
+                            "Cannot remove more than available stock.\n" +
+                                    "Available: " + stock + ", Requested: " + Quantity,
+                            "Update Stock Error",
                             JOptionPane.ERROR_MESSAGE);
+                    return;
                 }
-                return;
             }
 
-            // Update the product activity
+            // Add activity normally
             manager.addactivitytoproduct(ID, Quantity, action);
+
             JOptionPane.showMessageDialog(frame,
                     "Activity has been added to Product ID: " + ID,
                     "Update Stock",
@@ -418,8 +417,8 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
                     "Error",
                     JOptionPane.ERROR_MESSAGE);
         }
-
     }
+
 
     // View last 4 recent activities procedure
     public void Recent_Activities()
