@@ -7,7 +7,3 @@ hello123,bye
 admin,12345
 admin,12345
 admin,admin
-admin,12345
-admin,admin
-admin,admin
-admin,12345

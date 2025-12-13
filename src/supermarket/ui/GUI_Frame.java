@@ -1,6 +1,7 @@
 package supermarket.ui;
 
 import supermarket.management.SupermarketManager;
+import supermarket.ui.SaveMenuBarFunction;
 
 import javax.swing.*;
 
@@ -47,8 +48,10 @@ public class GUI_Frame extends JFrame {
         fileMenu.add(saveActions);
         menuBar.add(fileMenu);
 
+        SaveMenuBarFunction save = new SaveMenuBarFunction();
+
         saveActions.addActionListener(e -> {
-            manager.SaveMenuBarFunction("SaveActivities.txt");
+            save.saveActivities(manager,"SaveActivities.txt");
 
             JOptionPane.showMessageDialog(this, "Products have been successfully saved! ", "Save action confirmed", JOptionPane.INFORMATION_MESSAGE);
         });

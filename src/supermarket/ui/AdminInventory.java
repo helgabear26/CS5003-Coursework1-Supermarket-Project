@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class AdminInventory {
-    private Map<String, String> admin = new HashMap<>();
+    private HashMap<String, String> admin = new HashMap<>();
     private String logins;
 
     public AdminInventory(String logins) {
@@ -22,13 +22,14 @@ public class AdminInventory {
     }
 
     public boolean exists(String username) {
+
         return admin.containsKey(username.trim());
     }
 
     public void saveAdmin(String usernames, String passwords) {
         admin.put(usernames.trim(), passwords.trim());
-        try(FileWriter adminLoginInstaces = new FileWriter(logins, true)) {
-            adminLoginInstaces.write(usernames + "," + passwords + "\n");
+        try(FileWriter adminLoginInstances = new FileWriter(logins, true)) {
+            adminLoginInstances.write(usernames + "," + passwords + "\n");
         }
         catch (IOException e) {
             System.err.println("User could not be saved: " + e.getMessage());

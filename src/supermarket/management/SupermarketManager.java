@@ -195,25 +195,4 @@ public class SupermarketManager
         }
     }
 
-    public void SaveMenuBarFunction(String SaveActivities) {
-        try(BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(SaveActivities))) {
-            for (Product p : products) {
-                bufferedWriter.write(p.getId() + "," +
-                        p.getname() + "," +
-                        p.getQuantity() + "," +
-                        p.getTimeStamp()
-                );
-            }
-            System.out.println("Products successfully saved to " + SaveActivities);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-
-
-
-
-
 }

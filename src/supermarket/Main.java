@@ -1,7 +1,7 @@
 package supermarket;
 
-/* import supermarket.ui.ConsoleUI; */
-import supermarket.ui.AdminInventory;
+/* import supermarket.ui.ConsoleUI; */ // This was originally for the console
+
 import supermarket.ui.GUI_Frame;
 
 import javax.swing.*;
@@ -15,7 +15,7 @@ public class Main {
 
 
 
-/*
+/* Console
         AdminInventory app = new AdminInventory();
 
         app.run();
