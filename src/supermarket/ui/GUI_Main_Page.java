@@ -18,7 +18,7 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
     private JTextField nameTextfield;
     private JTextField QuantityTextfield;
     private JTextField IDTextField;
-    private JTextField AcFieldtivityTextField;
+    private JTextField ActivityTextField;
 
     public GUI_Main_Page(GUI_Frame frame, SupermarketManager manager){
         this.frame = frame;
