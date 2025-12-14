@@ -255,6 +255,14 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
                         JOptionPane.ERROR_MESSAGE);
                 return;
             }
+            if (manager.Productexists(ID)){
+                JOptionPane.showMessageDialog(frame,
+                        "A product with this ID already exists.\n" +
+                                "Please choose another ID",
+                        "Duplicate Product ID",
+                             JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
 
 
 

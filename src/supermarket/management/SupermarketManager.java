@@ -80,7 +80,12 @@ public class SupermarketManager
     public int search(ArrayList<Product> products, String targetID)
     {
         // using the search algorithms to locate the product id at index
-        return SearchAlgorithm.binarySearchByID(products,targetID);
+        return SearchAlgorithm.binarySearchByID(products,targetID) ;
+    }
+    // to check if a product already exist
+    public boolean Productexists(String id)
+    {
+        return  SearchAlgorithm.binarySearchByID(products,id) >= 0;
     }
 
     // the method is to preform an activity (add/ remove stock) on a specific product
