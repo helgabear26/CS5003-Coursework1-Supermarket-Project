@@ -9,7 +9,10 @@ import javax.swing.*;
 public class Main {
     public static void main (String[] args){
 
+        // Ensures that the GUI is created and updated on the Event Dispatch Thread
         SwingUtilities.invokeLater(() -> {
+
+            // Creates a new instance of GUI_Frame which opens the main GUI window
             new GUI_Frame();
         });
 
@@ -19,9 +22,6 @@ public class Main {
         AdminInventory app = new AdminInventory();
 
         app.run();
-
-
-
  */
 
     }
