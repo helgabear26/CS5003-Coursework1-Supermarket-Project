@@ -11,8 +11,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+// ===== Main GUI Class for Supermarket System =====
 public class GUI_Main_Page extends JPanel implements ActionListener {
 
+    // Text fields and Combo box for inputs
     private GUI_Frame frame;
     private SupermarketManager manager;
     private JTextField nameTextfield;
@@ -20,11 +22,14 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
     private JTextField IDTextField;
     private JComboBox<String> ActivityCombobox;
 
+    // ===== Constructor: Builds the entire GUI =====
     public GUI_Main_Page(GUI_Frame frame, SupermarketManager manager){
-        this.frame = frame;
-        this.manager = manager;
+        this.frame = frame; // Stores reference to main frame
+        this.manager = manager; // Store reference to supermarket manager
 
+        // Use BorderLayout for high-level layout (NORTH, CENTER, SOUTH)
         setLayout(new BorderLayout());
+        // Padding
         setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 
 
@@ -41,16 +46,16 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
         buttonPanel.setLayout(new GridLayout(7, 1, 10, 10));
         buttonPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-        JButton addProductBtn = new JButton("Add Product");
-        JButton viewProductsBtn = new JButton("View Products");
-        JButton deleteProductBtn = new JButton("Delete Product");
-        JButton updateStockBtn = new JButton("Update Stock");
-        JButton recentActivityBtn = new JButton("Recent Activities");
-        JButton clearBtn = new JButton("Clear");
-        JButton exitBtn = new JButton("Exit");
+        JButton addProductBtn = new JButton("Add Product"); // Button to add a new product
+        JButton viewProductsBtn = new JButton("View Products"); // Button to display all products
+        JButton deleteProductBtn = new JButton("Delete Product"); // Button to delete a product
+        JButton updateStockBtn = new JButton("Update Stock"); // Button to update product stock/activity
+        JButton recentActivityBtn = new JButton("Recent Activities"); // Button to view recent activities (last 4)
+        JButton clearBtn = new JButton("Clear"); // Button to clear all input fields
+        JButton exitBtn = new JButton("Exit"); // Button to close the application
 
 
-
+        // Add all buttons to the button panel in order (from top to bottom)
         buttonPanel.add(addProductBtn);
         buttonPanel.add(viewProductsBtn);
         buttonPanel.add(deleteProductBtn);
@@ -60,7 +65,7 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
         buttonPanel.add(exitBtn);
 
 
-
+        // Attach action listeners so button clicks are handled by actionPerformed(...)
         clearBtn.addActionListener(this);
         addProductBtn.addActionListener(this);
         viewProductsBtn.addActionListener(this);
@@ -72,24 +77,25 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
         add(buttonPanel, BorderLayout.CENTER);
 
 
-        // ===== Form (Text fields) =====
-        JPanel formPanel =  new JPanel();
-        formPanel.setLayout(new GridLayout(4,2,10,10));
+        // ===== Form (Text fields + Combo box) =====
+        JPanel formPanel =  new JPanel(); // Panel to hold the input form
+        formPanel.setLayout(new GridLayout(4,2,10,10)); // 4 rows, 2 columns (label + field)
 
-        JLabel name = new JLabel("Product Name:");
-        nameTextfield = new JTextField();
+        JLabel name = new JLabel("Product Name:"); // Label for product name
+        nameTextfield = new JTextField(); // Input for product name
 
-        JLabel ID = new JLabel("Product ID:");
-        IDTextField  =  new JTextField();
+        JLabel ID = new JLabel("Product ID:"); // Label for product ID
+        IDTextField  =  new JTextField(); // Input for product ID
 
-        JLabel quantity =  new JLabel("Quantity:");
-        QuantityTextfield =  new JTextField();
+        JLabel quantity =  new JLabel("Quantity:"); // Label for quantity
+        QuantityTextfield =  new JTextField(); // Input for product quantity
 
-        JLabel Activity = new JLabel("Activity:");
-        String [] activityOptions = {"Add to stock", "Remove from stock"};
-        ActivityCombobox = new JComboBox<>(activityOptions);
+        JLabel Activity = new JLabel("Activity:"); // Label for Activity
+        String [] activityOptions = {"Add to stock", "Remove from stock"}; // Combo box actions
+        ActivityCombobox = new JComboBox<>(activityOptions); // Combo box choosing for add/remove
 
 
+        // Add all labels and corresponding inputs to the form panel
         formPanel.add(name);
         formPanel.add(nameTextfield);
         formPanel.add(ID);
@@ -106,23 +112,23 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
 
         // Panel that actually holds form + buttons
         JPanel contentPanel = new JPanel(new BorderLayout());
-        contentPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20)); // inner padding
-        contentPanel.add(formPanel, BorderLayout.CENTER); // form in the middle
-        contentPanel.add(buttonPanel, BorderLayout.EAST); // buttons on the right
+        contentPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        contentPanel.add(formPanel, BorderLayout.CENTER);
+        contentPanel.add(buttonPanel, BorderLayout.EAST);
 
 
 
-// Outer panel uses BoxLayout to center the content panel
+        // ===== Centering Content Panel with BoxLayout =====
         JPanel centerPanel = new JPanel();
         centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.X_AXIS));
         centerPanel.setBorder(BorderFactory.createEmptyBorder(60, 200, 30, 200));
 
-// Horizontal glue on both sides keeps the contentPanel centered like a “box”
+        // Horizontal glue on both sides keeps the contentPanel centered like a “box”
         centerPanel.add(Box.createHorizontalGlue());
         centerPanel.add(contentPanel);
         centerPanel.add(Box.createHorizontalGlue());
 
-// Add to the main BorderLayout center
+        // Add to the main BorderLayout center
         add(centerPanel, BorderLayout.CENTER);
 
 
@@ -130,34 +136,34 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
         JPanel bottomPanel = new JPanel();
         bottomPanel.setLayout(new BorderLayout());
 
-// Separator line between buttons and manual
+        // Separator line between buttons and manual
         JSeparator separator = new JSeparator();
         separator.setForeground(Color.GRAY);
         bottomPanel.add(separator, BorderLayout.NORTH);
 
-// Manual Panel (centers all content)
+        // Manual Panel (centers all content)
         JPanel manualPanel = new JPanel(new GridBagLayout());
-// Moves the manual section downwards a little
+        // Moves the manual section downwards a little
         manualPanel.setBorder(BorderFactory.createEmptyBorder(30, 0, 20, 0));
 
-// Panel for stacking subtitle + bullet list vertically
+        // Panel for stacking subtitle + bullet list vertically
         JPanel textPanel = new JPanel();
         textPanel.setLayout(new BoxLayout(textPanel, BoxLayout.Y_AXIS));
         textPanel.setOpaque(false);
 
-// Subtitle label — moved slightly up
+        // Subtitle label
         JLabel subtitle = new JLabel("User Manual:");
         subtitle.setFont(new Font("Arial", Font.BOLD, 16));
         subtitle.setAlignmentX(Component.CENTER_ALIGNMENT);
         subtitle.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0)); // << shift subtitle up
 
-// Bullet list (centered)
+        // Bullet list (centered)
         JLabel manualText = new JLabel(
                 "<html><div style='text-align: center;'>"
                         + "• Add Product – Register a new product (Enter Product Name, ID, and Quantity fields)<br>"
                         + "• View Products – Display all items<br>"
                         + "• Delete Product – Remove a product (Enter Product ID field)<br>"
-                        + "• Update Stock – Change quantity (Enter Product ID, Quantity, and Activity field)<br>"
+                        + "• Update Stock – Change quantity (Enter Product ID, Quantity, and select an option from the Activity menu)<br>"
                         + "• Recent Activities – View latest updates (Enter Product ID)<br>"
                         + "• Exit – Close the system"
                         + "</div></html>"
@@ -165,63 +171,61 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
         manualText.setFont(new Font("Arial", Font.PLAIN, 14));
         manualText.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-// Add components to text panel
+        // Add components to text panel
         textPanel.add(subtitle);
         textPanel.add(Box.createVerticalStrut(5)); // spacing below subtitle
         textPanel.add(manualText);
 
-// Add to manual panel and bottom container
+        // Add to manual panel and bottom container
         manualPanel.add(textPanel);
         bottomPanel.add(manualPanel, BorderLayout.CENTER);
 
-// Add full bottom panel to SOUTH region
+        // Add full bottom panel to SOUTH region
         add(bottomPanel, BorderLayout.SOUTH);
 
 
 
-
-
-
-
     }
+
+    // ===== Event Handling: Respond to Button Clicks =====
     public void  actionPerformed(ActionEvent event)
     {
-        String command = event.getActionCommand();
+        String command = event.getActionCommand(); // Get button that triggered the event
 
-        if (command.equalsIgnoreCase("clear"))
+        if (command.equalsIgnoreCase("clear")) // If "Clear" button pressed
         {
-            Clear();
+            Clear(); // Call Clear method
         }
-        if (command.equalsIgnoreCase("add product"))
+        if (command.equalsIgnoreCase("add product")) // If "Add Product" button pressed
         {
-            addProduct();
+            addProduct(); // Call addProduct method
         }
-        if (command.equalsIgnoreCase("View Products"))
+        if (command.equalsIgnoreCase("View Products")) // If "View Products" button pressed
         {
-            display_product();
-
-        }
-        if (command.equalsIgnoreCase("delete product"))
-        {
-            delete_product();
+            display_product(); // Call display_product method
 
         }
-        if (command.equalsIgnoreCase("Update stock"))
+        if (command.equalsIgnoreCase("delete product")) // If "Delete Product" button pressed
         {
-            update_stock();
+            delete_product(); // Call delete_product method
+
         }
-        if (command.equalsIgnoreCase("Recent Activities"))
+        if (command.equalsIgnoreCase("Update stock")) // If "Update Stock" button pressed
         {
-            Recent_Activities();
+            update_stock(); // Call update_stock method
+        }
+        if (command.equalsIgnoreCase("Recent Activities")) // If "Recent Activities" button pressed
+        {
+            Recent_Activities(); // Call Recent_Activities method
 
         }
     }
     public  void  Clear()
     {
-        nameTextfield.setText(" ");
-        IDTextField.setText(" ");
-        QuantityTextfield.setText(" ");
-        ActivityCombobox.setSelectedIndex(-1);
+        nameTextfield.setText(" "); // Clear product name field
+        IDTextField.setText(" "); // Clear product ID field
+        QuantityTextfield.setText(" "); // Clear product ID field
+        ActivityCombobox.setSelectedIndex(-1); // Reset combo box selection (no option selected)
     }
 
     // Add product procedure
@@ -234,7 +238,7 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
 
             if(nameTextfield.getText().isEmpty() ||
                     IDTextField.getText().isEmpty() ||
-                  QuantityTextfield.getText().isEmpty())
+                    QuantityTextfield.getText().isEmpty())
             {
                 JOptionPane.showMessageDialog(frame,
                         "The required text fields are empty!\nRefer to User Manual.",
@@ -253,14 +257,6 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
                         "Quantity must be greater than 0.",
                         "Add Product Error",
                         JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            if (manager.Productexists(ID)){
-                JOptionPane.showMessageDialog(frame,
-                        "A product with this ID already exists.\n" +
-                                "Please choose another ID",
-                        "Duplicate Product ID",
-                             JOptionPane.INFORMATION_MESSAGE);
                 return;
             }
 
@@ -320,20 +316,20 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
     public void delete_product()
     {
 
-            String ID = IDTextField.getText().trim();
-            Product deletedID = manager.deleteproducts(ID);
-            if (deletedID  == null) {
-                JOptionPane.showMessageDialog(frame,
-                        "Invalid Product ID.",
-                        "Delete Product Error",
-                        JOptionPane.ERROR_MESSAGE);
-            }
-            else {
-                JOptionPane.showMessageDialog(frame,
-                        "Product has been removed.",
-                        "Delete Product",
-                        JOptionPane.INFORMATION_MESSAGE);
-            }
+        String ID = IDTextField.getText().trim();
+        Product deletedID = manager.deleteproducts(ID);
+        if (deletedID  == null) {
+            JOptionPane.showMessageDialog(frame,
+                    "Invalid Product ID.",
+                    "Delete Product Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+        else {
+            JOptionPane.showMessageDialog(frame,
+                    "Product has been removed.",
+                    "Delete Product",
+                    JOptionPane.INFORMATION_MESSAGE);
+        }
 
 
 
@@ -468,3 +464,4 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
 
 
 }
+
