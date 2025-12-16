@@ -174,7 +174,7 @@ public class SupermarketManager
 
     }
 
-    // this method print out all the  activites that belong to specific product id
+    // this method print out all the  activities that belong to specific product id
     public void printProdcutsactivites(String id)
     {
         // find the product

@@ -236,6 +236,7 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
             String ID = IDTextField.getText().trim();
             String name = nameTextfield.getText().trim();
 
+            // check if the required text field are empty
             if(nameTextfield.getText().isEmpty() ||
                     IDTextField.getText().isEmpty() ||
                     QuantityTextfield.getText().isEmpty())
@@ -259,6 +260,8 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
                         JOptionPane.ERROR_MESSAGE);
                 return;
             }
+
+            // to check if a product list is already in the product list
             if(manager.Productexists(ID))
             {
                 JOptionPane.showMessageDialog(frame,
@@ -273,13 +276,16 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
 
 
 
+            // used the information from the required textField to create a new product
             manager.addProduct(new Product(Quantity, name, ID));
 
             JOptionPane.showMessageDialog(frame,
                     "Product has been successfully added.",
                     "Add Product",
                     JOptionPane.INFORMATION_MESSAGE);
-        } catch (NumberFormatException e) {
+        }
+        // to catch the wrong data type in the Quantity field
+        catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(frame,
                     "Some fields require numerical values.",
                     "Add Product",
@@ -292,6 +298,8 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
     public void display_product()
     {
         ArrayList<Product> products = manager.listproducts();
+
+        // if there is no  product in the product list
         if (products == null || products.isEmpty())
         {
             JOptionPane.showMessageDialog(frame,
@@ -301,6 +309,7 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
             return;
         }
 
+        // the textArea where the product been displayed
         JTextArea textArea = new JTextArea(20,40);
         textArea.setEditable(false);
         StringBuilder message = new StringBuilder();
@@ -314,6 +323,7 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
         JScrollPane scrollPane = new JScrollPane(textArea);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
+        // to create a new frame to display the product list
         JFrame productFrame = new JFrame("Product List");
         productFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         productFrame.add(scrollPane);
@@ -329,6 +339,8 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
 
         String ID = IDTextField.getText().trim();
         Product deletedID = manager.deleteproducts(ID);
+
+        // if the productID inputted is not the  product
         if (deletedID  == null) {
             JOptionPane.showMessageDialog(frame,
                     "Invalid Product ID.",
@@ -398,8 +410,10 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
                     return;
                 }
 
+                // variable use to the store the quantity of that product
                 int stock = target.getQuantity();
 
+                // if the value of the quantity is empty
                 if (stock == 0) {
                     JOptionPane.showMessageDialog(frame,
                             "This product already has 0 stock.\nYou cannot remove any more.",
@@ -408,6 +422,7 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
                     return;
                 }
 
+                // when trying to remove more Quantity than available ones
                 if (Quantity > stock) {
                     JOptionPane.showMessageDialog(frame,
                             "Cannot remove more than available stock.\n" +
@@ -426,6 +441,7 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
                     "Update Stock",
                     JOptionPane.INFORMATION_MESSAGE);
 
+            // to catch the wrong data type
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(frame,
                     "Some fields require numerical values.",
@@ -442,6 +458,7 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
 
         CustomLinkedList<Activity> activityList = manager.lastFourSortedBYQuantity(ID);
 
+        // check if the activity list is empty
         if (activityList == null || activityList.size() == 0)
         {
             JOptionPane.showMessageDialog(frame,
@@ -450,19 +467,23 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
                     JOptionPane.WARNING_MESSAGE);
             return;
         }
+
         StringBuilder message  = new StringBuilder();
         message.append("Recent Activities for Product ID: ").append(ID).append("\n");
 
+        // loop through each activity in the list and append its String representation
         for (int i = 0; i < activityList.size(); i++) {
             message.append(activityList.get(i).toString()).append("\n\n");
         }
 
+        // create a textArea to display the activities and make it non-editable
         JTextArea textArea = new JTextArea(message.toString());
         textArea.setEditable(false);
 
         JScrollPane scrollPane = new JScrollPane(textArea);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
+        // create a new frame to display the activity List
         JFrame activityFrame = new JFrame("Activity List");
         activityFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         activityFrame.add(scrollPane);
