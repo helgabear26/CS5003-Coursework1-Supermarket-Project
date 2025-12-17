@@ -220,6 +220,7 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
 
         }
     }
+    // this method is for the clear button
     public  void  Clear()
     {
         nameTextfield.setText(" "); // Clear product name field
@@ -232,7 +233,7 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
     public  void addProduct() {
         try {
 
-
+            // get the required input from the user
             String ID = IDTextField.getText().trim();
             String name = nameTextfield.getText().trim();
 
@@ -240,6 +241,8 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
             if(nameTextfield.getText().isEmpty() ||
                     IDTextField.getText().isEmpty() ||
                     QuantityTextfield.getText().isEmpty())
+
+            // display information to user the required text field are empty and to refer the user to the manuel
             {
                 JOptionPane.showMessageDialog(frame,
                         "The required text fields are empty!\nRefer to User Manual.",
@@ -249,6 +252,7 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
 
             }
 
+            // get the required input from the text field
             int Quantity = Integer.parseInt(QuantityTextfield.getText().trim());
 
 
@@ -264,6 +268,7 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
             // to check if a product list is already in the product list
             if(manager.Productexists(ID))
             {
+                // display a message to inform the user of the product id already exits
                 JOptionPane.showMessageDialog(frame,
                         "A product with this ID already exists.\n"+
                                 "Please choose another ID",
@@ -279,6 +284,8 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
             // used the information from the required textField to create a new product
             manager.addProduct(new Product(Quantity, name, ID));
 
+            //  display a message to inform the user that
+            //  the product has been deleted from the product list
             JOptionPane.showMessageDialog(frame,
                     "Product has been successfully added.",
                     "Add Product",
@@ -297,11 +304,13 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
     // View product procedure
     public void display_product()
     {
+        // retrieve the list of all the product
         ArrayList<Product> products = manager.listproducts();
 
         // if there is no  product in the product list
         if (products == null || products.isEmpty())
         {
+            // display message to inform the user that there no product to been display
             JOptionPane.showMessageDialog(frame,
                     "No Product(s) found." ,
                     "Display Product(s)",
@@ -311,13 +320,21 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
 
         // the textArea where the product been displayed
         JTextArea textArea = new JTextArea(20,40);
+        // set the text area so it would not be able to edit on it
         textArea.setEditable(false);
+
+        // create a StringBuilder to store and
+        // build the message text efficiently
         StringBuilder message = new StringBuilder();
 
+        //loop through the list of the products
         for (Product value : products) {
+
+            // add each product details to the message
             message.append(value.toString()).append("\n");
 
         }
+        // set the message information to the text area
         textArea.setText(message.toString());
 
         JScrollPane scrollPane = new JScrollPane(textArea);
@@ -337,7 +354,10 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
     public void delete_product()
     {
 
+        // get the information from the user
         String ID = IDTextField.getText().trim();
+
+        // to delete the product with the specified ID and save the product details
         Product deletedID = manager.deleteproducts(ID);
 
         // if the productID inputted is not the  product
@@ -347,6 +367,7 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
                     "Delete Product Error",
                     JOptionPane.ERROR_MESSAGE);
         }
+        // display a message that the product has been removed
         else {
             JOptionPane.showMessageDialog(frame,
                     "Product has been removed.",
@@ -361,7 +382,10 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
     // Update stock procedure (changing stock quantity)
     public void update_stock() {
         try {
+
+            //  get the input from the user and the trim() is used to remove the excess space
             String ID = IDTextField.getText().trim();
+
             String selected = (String) ActivityCombobox.getSelectedItem();
 
             // Required fields check
@@ -395,6 +419,7 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
             if (isRemoving) {
                 Product target = null;
 
+                // loop through all products to find the one with the matching ID
                 for (Product p : manager.listproducts()) {
                     if (p.getId().equalsIgnoreCase(ID)) {
                         target = p;
@@ -402,7 +427,10 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
                     }
                 }
 
+                // if the product doesn't exist in the product list
                 if (target == null) {
+
+                    // display a message that product is not in the list
                     JOptionPane.showMessageDialog(frame,
                             "Invalid Product ID.",
                             "Update Stock Error",
@@ -433,9 +461,13 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
                 }
             }
 
-            // Add activity normally
+            // Add activity to the product and
+            // store the activity in the activity list
             manager.addactivitytoproduct(ID, Quantity, action);
 
+            // display a successful message to inform
+            // the user that activity has been added to product
+            // whether remove from stock or added to stock
             JOptionPane.showMessageDialog(frame,
                     "Activity has been added to Product ID: " + ID,
                     "Update Stock",
@@ -451,11 +483,13 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
     }
 
 
-    // View last 4 recent activities procedure
+    //  display the last 4 recent activities procedure
     public void Recent_Activities()
     {
         String ID =IDTextField.getText().trim();
 
+        // to retrieve the last four activities for the given Product ID
+        // and sorting the list by quantity
         CustomLinkedList<Activity> activityList = manager.lastFourSortedBYQuantity(ID);
 
         // check if the activity list is empty
@@ -468,10 +502,13 @@ public class GUI_Main_Page extends JPanel implements ActionListener {
             return;
         }
 
+        // create a StringBuilder to store and
+        // build the message text efficiently
         StringBuilder message  = new StringBuilder();
         message.append("Recent Activities for Product ID: ").append(ID).append("\n");
 
-        // loop through each activity in the list and append its String representation
+        // loop through each activity in the list and
+        // append its String representation
         for (int i = 0; i < activityList.size(); i++) {
             message.append(activityList.get(i).toString()).append("\n\n");
         }
